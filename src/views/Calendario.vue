@@ -1,5 +1,5 @@
 <template>
-  <div>HOME</div>
+  <div>Calendario</div>
 </template>
 
 <script>
