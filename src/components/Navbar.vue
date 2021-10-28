@@ -4,10 +4,7 @@
       <v-toolbar-title>Estudios Mint</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>mdi-home</v-icon>
-        logo
-      </v-btn>
+      <v-img src="../assets/logo.png" max-height="90" max-width="90"></v-img>
       <v-col class="mb-3" cols="12">
         <v-row justify="end" class="mr-5">
           <v-btn
