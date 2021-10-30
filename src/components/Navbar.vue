@@ -1,12 +1,10 @@
 <template>
   <div>
     <v-app-bar app dark>
-      <v-toolbar-title>Estudios Mint</v-toolbar-title>
-      <v-spacer></v-spacer>
-
       <v-img src="../assets/logo.png" max-height="90" max-width="90"></v-img>
-      <v-col class="mb-3" cols="12">
-        <v-row justify="end" class="mr-5">
+      <v-spacer></v-spacer>
+      <v-col class="mb-3" cols="12" >
+        <v-row justify="end" class="mr-5 pr-5 ml-0">
           <v-btn
             color="white"
             link

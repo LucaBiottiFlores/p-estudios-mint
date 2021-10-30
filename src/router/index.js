@@ -12,17 +12,17 @@ const routes = [
   {
     path: "/carrito-de-compras",
     name: "CarritoDeCompras",
-    component: () => import("../views/CarritoCompras.vue"),
+    component: () => import("../views/ShopCart.vue"),
   },
   {
     path: "/agendar-hora",
     name: "Agendar hora",
-    component: () => import("../views/Calendario.vue"),
+    component: () => import("../views/Calendar.vue"),
   },
   {
     path: "/tienda",
     name: "tienda",
-    component: () => import("../views/Tienda.vue"),
+    component: () => import("../views/Store.vue"),
   },
 ];
 
