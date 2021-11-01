@@ -3,7 +3,7 @@
     <v-app-bar app dark>
       <v-img src="../assets/logo.png" max-height="90" max-width="90"></v-img>
       <v-spacer></v-spacer>
-      <v-col class="mb-3" cols="12" >
+      <v-col class="mb-3" cols="12">
         <v-row justify="end" class="mr-5 pr-5 ml-0">
           <v-btn
             color="white"
@@ -23,28 +23,32 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   data: () => ({
     links: [
       {
-        name: "Inicio",
-        to: "/",
+        name: 'Inicio',
+        to: '/'
       },
       {
-        name: "Agenda tu hora",
-        to: "/agendar-hora",
+        name: 'Agenda tu hora',
+        to: '/agendar-hora'
       },
       {
-        name: "Tienda",
-        to: "/tienda",
+        name: 'Tienda',
+        to: '/tienda'
       },
       {
-        name: "Carrito de compras",
-        to: "/carrito-de-compras",
-      },
-    ],
-  }),
-};
+        name: 'Carrito de compras',
+        to: '/carrito-de-compras'
+      }
+    ]
+  })
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-app-bar {
+  opacity: 0.8;
+}
+</style>
