@@ -2,6 +2,7 @@
   <v-app>
     <!-- vista tienda -->
     <v-divider></v-divider>
+
     <div class="teal accent-2">
       <v-container class="mt-5">
         <v-row>
