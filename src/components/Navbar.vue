@@ -47,29 +47,33 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   data: () => ({
     drawer: true,
     links: [
       {
-        name: "Inicio",
-        to: "/",
+        name: 'Inicio',
+        to: '/'
       },
       {
-        name: "Agenda tu hora",
-        to: "/agendar-hora",
+        name: 'Agenda tu hora',
+        to: '/agendar-hora'
       },
       {
-        name: "Tienda",
-        to: "/tienda",
+        name: 'Tienda',
+        to: '/tienda'
       },
       {
-        name: "Carrito de compras",
-        to: "/carrito-de-compras",
-      },
-    ],
-  }),
-};
+        name: 'Carrito de compras',
+        to: '/carrito-de-compras'
+      }
+    ]
+  })
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-app-bar {
+  opacity: 0.8;
+}
+</style>
