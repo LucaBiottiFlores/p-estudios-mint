@@ -1,4 +1,4 @@
-import Firebase from 'firebase'
+import Firebase from "firebase";
 
 Firebase.initializeApp({
   apiKey: process.env.VUE_APP_FIREBASE_APIKEY,
@@ -6,5 +6,5 @@ Firebase.initializeApp({
   projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.VUE_APP_FIREBASE_MASSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_FIREBASE_APPID
-})
+  appId: process.env.VUE_APP_FIREBASE_APPID,
+});
