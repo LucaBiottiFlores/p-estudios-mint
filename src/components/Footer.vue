@@ -2,7 +2,12 @@
   <div>
     <v-footer class="black d-flex justify-center align-center">
       <div>
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4 my-3 white--text" icon>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4 my-3 white--text"
+          icon
+        >
           <v-icon size="24px">
             {{ icon }}
           </v-icon>
@@ -16,9 +21,9 @@
 <script>
 export default {
   data: () => ({
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
-  })
-}
+    icons: ["mdi-facebook", "mdi-twitter", "mdi-instagram"],
+  }),
+};
 </script>
 
 <style>
