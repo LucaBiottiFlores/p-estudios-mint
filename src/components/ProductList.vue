@@ -25,7 +25,9 @@
                 <v-avatar><v-icon>mdi-star</v-icon></v-avatar>
                 Precio: ${{ product.price.toLocaleString() }}
               </v-card-text>
-              <v-btn class="justify-content-right">Agregar al carrito</v-btn>
+              <v-btn dark class="justify-content-right mb-3"
+                >Agregar al carrito</v-btn
+              >
             </v-card>
           </v-col>
         </v-row>
