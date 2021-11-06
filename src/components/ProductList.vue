@@ -4,30 +4,39 @@
     <v-divider></v-divider>
 
     <div class="teal accent-2">
-      <v-container class="mt-5">
+      <v-container width="300px">
         <v-row>
           <v-col
             v-for="product in $store.state.products"
             :key="product.id"
             cols="12"
-            sm="3"
             md="4"
+            sm="12"
           >
-            <v-card class="mx-auto text-center">
-              <v-img :src="product.src" height="420px" width="500px"></v-img>
-
+            <v-card class="text-center">
+              <div class="container">
+                <v-img :src="product.src" class="image_store"></v-img>
+              </div>
               <v-card-title class="justify-center">{{
                 product.name
               }}</v-card-title>
               <v-divider></v-divider>
               <v-card-subtitle>{{ product.description }}</v-card-subtitle>
-              <v-card-text>
-                <v-avatar><v-icon>mdi-star</v-icon></v-avatar>
-                Precio: ${{ product.price.toLocaleString() }}
-              </v-card-text>
-              <v-btn dark class="justify-content-right mb-3"
-                >Agregar al carrito</v-btn
-              >
+              <v-divider></v-divider>
+              <v-card-title class="justify-center"
+                ><v-avatar
+                  ><v-icon color="yellow" large class="ms-3 mb-1"
+                    >mdi-star</v-icon
+                  ></v-avatar
+                >
+                ${{ product.price.toLocaleString() }}
+              </v-card-title>
+              <v-divider></v-divider>
+              <v-card-actions class="d-flex justify-end">
+                <v-btn dark class="mb-3 teal accent-4 btn_store"
+                  >Agregar al carrito</v-btn
+                >
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -45,4 +54,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.container_store {
+  background-color: #a4f9c8;
+}
+.image_store {
+  width: 200px;
+  height: 230px;
+}
+/* .container{
+  padding-left: 55px;
+} */
+
+.store_price {
+  font-size: 30px;
+}
+</style>
