@@ -1,35 +1,35 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("../views/Home.vue"),
+    path: '/',
+    name: 'Home',
+    component: () => import('../views/Home.vue')
   },
   {
-    path: "/carrito-de-compras",
-    name: "CarritoDeCompras",
-    component: () => import("../views/ShopCart.vue"),
+    path: '/carrito-de-compras',
+    name: 'CarritoDeCompras',
+    component: () => import('../views/ShopCart.vue')
   },
   {
-    path: "/agendar-hora",
-    name: "Agendar hora",
-    component: () => import("../views/Calendar.vue"),
+    path: '/agendar-hora',
+    name: 'Agendar hora',
+    component: () => import('../views/AppointmentCalendar.vue')
   },
   {
-    path: "/tienda",
-    name: "tienda",
-    component: () => import("../views/Store.vue"),
-  },
-];
+    path: '/tienda',
+    name: 'tienda',
+    component: () => import('../views/Store.vue')
+  }
+]
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router
