@@ -7,7 +7,7 @@
       <v-container width="300px">
         <v-row>
           <v-col
-            v-for="product in $store.state.products"
+            v-for="product in $store.state.store.products"
             :key="product.id"
             cols="12"
             md="4"
@@ -34,7 +34,10 @@
               </v-card-title>
               <v-divider></v-divider>
               <v-card-actions class="d-flex justify-end">
-                <v-btn dark class="mb-3 teal accent-4 btn_store"
+                <v-btn
+                  dark
+                  class="mb-3 teal accent-4 btn_store"
+                  @click="addToShoppingCart(product)"
                   >Agregar al carrito</v-btn
                 >
               </v-card-actions>
@@ -52,6 +55,12 @@ export default {
   props: {
     products: { type: Array, require: true },
   },
+  methods: {
+    addToShoppingCart(product) {
+      console.log("submit addToShoppingCart");
+      this.$store.dispatch("addProductToShoppingCart", product);
+    },
+  },
 };
 </script>
 
@@ -63,9 +72,6 @@ export default {
   width: 200px;
   height: 230px;
 }
-/* .container{
-  padding-left: 55px;
-} */
 
 .store_price {
   font-size: 30px;
