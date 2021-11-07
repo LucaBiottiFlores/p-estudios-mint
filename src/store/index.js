@@ -61,6 +61,6 @@ export default new Vuex.Store({
     ],
   },
   modules: {
-    ModuloProductos,
+    products: ModuloProductos,
   },
 });

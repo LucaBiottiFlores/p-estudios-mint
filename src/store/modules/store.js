@@ -3,6 +3,8 @@
 export const ModuloProductos = {
   namespaced: true,
   state: {
+    search: "",
+    shoppingCart: [],
     products: [],
   },
   getters: {
@@ -21,12 +23,6 @@ export const ModuloProductos = {
         );
       }
     },
-    // mutations: {
-    //   SET_PRODUCTS(state, newProduct) {
-    //     state.products = newProduct;
-    //   },
-    // },
-
     searchProductByClearance(state) {
       return state.products.filter((product) => product.clearance === true);
     },
@@ -40,8 +36,8 @@ export const ModuloProductos = {
           name: product.name,
           description: product.description,
           price: product.price,
-          discount: product.discount,
-          clearance: product.clearance,
+          // discount: product.discount,
+          // clearance: product.clearance,
           src: product.src,
           quantity: item.quantity,
         };
@@ -62,7 +58,6 @@ export const ModuloProductos = {
         return accumulator;
       }, 0);
     },
-
     totalDiscountShoppingCart(state) {
       return state.shoppingCart.reduce((accumulator, item) => {
         accumulator =
@@ -102,6 +97,11 @@ export const ModuloProductos = {
     CLEAR_SHOPPING_CART(state) {
       state.shoppingCart = [];
     },
+
+    //setea productos
+    // SET_PRODUCTS(state, newProduct) {
+    //   state.products = newProduct;
+    // },
   },
   actions: {
     setSearch(context, newSearch) {
@@ -150,19 +150,17 @@ export const ModuloProductos = {
         }, 1000);
       });
     },
+    // AllProducts(context) {
+    //   Firebase.firestore()
+    //     .collection("products")
+    //     .get()
+    //     .then((documents) => {
+    //       const products = [];
+    //       documents.forEach((document) => {
+    //         products.push({ id: document.id, ...document.data() });
+    //         context.commit("SET_PRODUCTS", products);
+    //       });
+    //     });
+    // },
   },
-  // actions: {
-  //   TodosLosCursos(context) {
-  //     Firebase.firestore()
-  //       .collection("products")
-  //       .get()
-  //       .then((documents) => {
-  //         const products = [];
-  //         documents.forEach((document) => {
-  //           products.push({ id: document.id, ...document.data() });
-  //           context.commit("SET_PRODUCTS", products);
-  //         });
-  //       });
-  //   },
-  // },
 };

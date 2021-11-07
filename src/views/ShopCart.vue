@@ -1,5 +1,5 @@
 <template>
-  <div>carrito de compras</div>
+ <div>Carrito de compras</div>
 </template>
 
 <script>

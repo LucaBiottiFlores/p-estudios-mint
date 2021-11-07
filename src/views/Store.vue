@@ -6,7 +6,7 @@
         <h2 class="title_color_mint">DE PRODUCTOS</h2>
       </div>
     </main>
-    <div class="form_container" width="100vw">
+    <form class="form_container" width="100vw">
       <label class="ms-5">Busca tu producto:</label>
       <input
         width="100vw"
@@ -17,28 +17,28 @@
         :value="$store.state.search"
         @input="$store.dispatch('setSearch', $event.target.value)"
       />
-    </div>
-    <div>
-      <ProductList
-        v-if="$store.getters.searchedProducts.length > 0"
-        :products="$store.getters.searchedProducts"
-      />
+    </form>
 
-      <div v-else>
-        <div class="product-not-found my-5">Producto no encontrado! D:</div>
-        <div></div>
-      </div>
+    <!-- <ProductList
+      v-if="$store.getters.searchedProducts.length > 0"
+      :products="$store.getters.searchedProducts"
+    /> -->
+    <div>
+      <div class="product-not-found my-5">Producto no encontrado! D:</div>
     </div>
   </v-app>
 </template>
 
 <script>
-import ProductList from "../components/ProductList.vue";
+// import ProductList from "../components/ProductList.vue";
 
 export default {
-  components: {
-    ProductList,
-  },
+  // components: {
+  //   ProductList,
+  // },
+  // mounted() {
+  //   this.$store.dispatch("products/AllProducts");
+  // },
 };
 </script>
 
