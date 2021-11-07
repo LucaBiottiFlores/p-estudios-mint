@@ -14,9 +14,10 @@
             sm="12"
           >
             <v-card class="text-center">
-              <div class="container">
-                <v-img :src="product.src" class="image_store"></v-img>
-              </div>
+              <v-container fluid>
+                <v-img class="image_store mx-auto" :src="product.src"></v-img>
+              </v-container>
+
               <v-card-title class="justify-center">{{
                 product.name
               }}</v-card-title>
