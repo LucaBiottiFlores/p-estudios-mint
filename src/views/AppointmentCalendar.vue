@@ -4,7 +4,7 @@
       <v-sheet height="64">
         <v-toolbar flat color="white">
           <!-- Botón Agregar Evento Starts -->
-          <v-btn color="primary" dark class="mr-4" @click="dialog = true">
+          <v-btn color="secondary" dark class="mr-4" @click="dialog = true">
             Reservar Horas
           </v-btn>
           <!-- Botón Agregar Evento Ends -->
@@ -42,12 +42,13 @@
         <v-calendar
           ref="calendar"
           v-model="focus"
-          color="primary"
+          color="secondary"
           :events="events"
           :event-color="getEventColor"
           :event-margin-bottom="3"
           :now="today"
           :type="type"
+          :dark="false"
           @click:event="showEvent"
           @click:more="viewDay"
           @click:date="viewDay"
@@ -61,35 +62,64 @@
         ></v-calendar>
 
         <!-- Modal Agregar Evento -->
-        <v-dialog v-model="dialog" max-width="500">
+        <v-dialog v-model="dialog" max-width="700">
           <v-card>
             <v-container>
               <v-form @submit.prevent="addEvent">
-                <v-text-field type="text" label="Agregar Nombre" v-model="name">
-                </v-text-field>
-                <v-text-field
-                  type="text"
-                  label="Agregar un Detalle"
-                  v-model="details"
-                >
-                </v-text-field>
-                <v-text-field
-                  type="date"
-                  label="Inicio del evento"
-                  v-model="start"
-                >
-                </v-text-field>
-                <v-text-field type="date" label="Fin del evento" v-model="end">
-                </v-text-field>
-                <v-text-field
-                  type="color"
-                  label="Color del evento"
-                  v-model="color"
-                >
-                </v-text-field>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      type="text"
+                      label="Agregar Nombre"
+                      v-model="name"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      type="text"
+                      label="Agregar un Detalle"
+                      v-model="details"
+                    >
+                    </v-text-field>
+                  </v-col>
+
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      type="date"
+                      label="Inicio del evento"
+                      v-model="start"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      type="time"
+                      label="Hora de Inicio"
+                      v-model="hour"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      type="date"
+                      label="Fin del evento"
+                      v-model="end"
+                    >
+                    </v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      type="color"
+                      label="Color del evento"
+                      v-model="color"
+                    >
+                    </v-text-field>
+                  </v-col>
+                </v-row>
                 <v-btn
                   type="submit"
-                  color="primary"
+                  color="secondary"
                   class="mr-4"
                   @click.stop="dialog = false"
                   >Reservar</v-btn
@@ -173,6 +203,8 @@ export default {
     },
     start: null,
     end: null,
+    hour: null,
+    numberOfHours: null,
     selectedEvent: {},
     selectedElement: null,
     selectedOpen: false,
@@ -226,14 +258,14 @@ export default {
     this.getEvents()
   },
   methods: {
-    async updateEvent(ev) {
+    async updateEvent(event) {
       try {
         await Firebase.firestore()
           .collection('appointments')
-          .doc(ev.id)
+          .doc(event.id)
           .update({
-            name: ev.name,
-            details: ev.details
+            name: event.name,
+            details: event.details
           })
 
         this.selectedOpen = false
@@ -245,11 +277,11 @@ export default {
     editEvent(id) {
       this.currentlyEditing = id
     },
-    async deleteEvent(ev) {
+    async deleteEvent(event) {
       try {
         await Firebase.firestore()
           .collection('appointments')
-          .doc(ev.id)
+          .doc(event.id)
           .delete()
         this.selectedOpen = false
         this.getEvents()
@@ -289,10 +321,9 @@ export default {
           .get()
         const events = []
 
-        snapshot.forEach((doc) => {
-          // console.log(doc.id);
-          let eventoData = doc.data()
-          eventoData.id = doc.id
+        snapshot.forEach((document) => {
+          let eventoData = document.data()
+          eventoData.id = document.id
           events.push(eventoData)
         })
 
@@ -346,3 +377,5 @@ export default {
   }
 }
 </script>
+
+<style scoped></style>
