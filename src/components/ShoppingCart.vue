@@ -5,20 +5,15 @@
       <v-card class="ms-5 mt-5" max-width="500" outlined>
         <v-list-item three-line>
           <v-list-item-avatar tile size="80" color="grey">
-            <v-img :src="product.src"></v-img>
+            <!-- <v-img :src="product.src"></v-img> -->
+            {{}}
           </v-list-item-avatar>
-          <v-list-item-content
-            v-for="product in $store.state.products.products"
-            :key="product.id"
-            class="text-center"
-          >
-            <v-list-item-title class="text-h5 mb-4">
-              {{ product.name }}
-            </v-list-item-title>
-            <v-list-item-subtitle class="text-start">{{
-              product.description
-            }}</v-list-item-subtitle>
-            <v-list-item-title class="text-h5 mt-5">Total: $</v-list-item-title>
+          <v-list-item-content class="text-center">
+            <v-list-item-title class="text-h5 mb-4"> {{}} </v-list-item-title>
+            <v-list-item-subtitle class="text-start"></v-list-item-subtitle>
+            <v-list-item-title class="text-h5 mt-5"
+              >Total: ${{}}</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
         <v-card-actions class="justify-start">
@@ -44,6 +39,9 @@
 <script>
 export default {
   name: "ShoppingCart",
+  props: {
+    products: { type: Array, require: true },
+  },
 };
 </script>
 

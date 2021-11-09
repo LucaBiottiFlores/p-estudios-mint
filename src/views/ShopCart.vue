@@ -16,6 +16,9 @@ export default {
   components: {
     ShoppingCart,
   },
+  mounted() {
+    this.$store.dispatch("products/AllProducts");
+  },
 };
 </script>
 
