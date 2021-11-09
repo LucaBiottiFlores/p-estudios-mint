@@ -1,9 +1,29 @@
 <template>
-  <div>carrito de compras</div>
+  <div>
+    <ShoppingCart />
+    <!-- <ShoppingCart
+      v-for="(product, index) in $store.state.shoppingCart.Cart"
+      :key="index"
+      :product="product"
+    /> -->
+  </div>
 </template>
 
 <script>
-export default {};
+import ShoppingCart from "../components/ShoppingCart.vue";
+
+export default {
+  components: {
+    ShoppingCart,
+  },
+  mounted() {
+    this.$store.dispatch("products/AllProducts");
+  },
+};
 </script>
 
-<style></style>
+<style>
+.btn_color_mint {
+  color: #95f5bd;
+}
+</style>

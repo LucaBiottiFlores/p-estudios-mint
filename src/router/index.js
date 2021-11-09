@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/agendar-hora",
     name: "Agendar hora",
-    component: () => import("../views/Calendar.vue"),
+    component: () => import("../views/AppointmentCalendar.vue"),
   },
   {
     path: "/tienda",

@@ -22,12 +22,11 @@
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 <style scoped>
-
 .scheduleButton {
-  font-family: 'Bebas Neue', cursive;
+  font-family: "Bebas Neue", cursive;
   background-color: #97ccb1;
   font-size: 30px;
   color: white;
@@ -36,14 +35,14 @@ export default {}
 .schedule {
   height: 500px;
   width: auto;
-  background-image: url('../assets/agendar-hora2.jpg');
+  background-image: url("../assets/agendar-hora2.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
 .scheduleTitle {
-  font-family: 'Bebas Neue', cursive;
+  font-family: "Bebas Neue", cursive;
   color: white;
   font-size: 60px;
   text-align: center;
