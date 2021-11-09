@@ -35,7 +35,7 @@ export const ModuloProductos = {
     ADD_PRODUCT_TO_PRODUCT_LIST(state, newProduct) {
       state.products.push(newProduct);
     },
-  
+
     //setea productos
     SET_PRODUCTS(state, newProduct) {
       state.products = newProduct;
