@@ -1,4 +1,4 @@
-// import Firebase from "firebase";
+import Firebase from "firebase";
 
 export const ModuloProductos = {
   namespaced: true,
@@ -99,9 +99,9 @@ export const ModuloProductos = {
     },
 
     //setea productos
-    // SET_PRODUCTS(state, newProduct) {
-    //   state.products = newProduct;
-    // },
+    SET_PRODUCTS(state, newProduct) {
+      state.products = newProduct;
+    },
   },
   actions: {
     setSearch(context, newSearch) {
@@ -150,17 +150,17 @@ export const ModuloProductos = {
         }, 1000);
       });
     },
-    // AllProducts(context) {
-    //   Firebase.firestore()
-    //     .collection("products")
-    //     .get()
-    //     .then((documents) => {
-    //       const products = [];
-    //       documents.forEach((document) => {
-    //         products.push({ id: document.id, ...document.data() });
-    //         context.commit("SET_PRODUCTS", products);
-    //       });
-    //     });
-    // },
+    AllProducts(context) {
+      Firebase.firestore()
+        .collection("products")
+        .get()
+        .then((documents) => {
+          const products = [];
+          documents.forEach((document) => {
+            products.push({ id: document.id, ...document.data() });
+          });
+          context.commit("SET_PRODUCTS", products);
+        });
+    },
   },
 };

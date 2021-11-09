@@ -1,13 +1,12 @@
 <template>
   <v-app>
-    <!-- vista tienda -->
     <v-divider></v-divider>
 
     <div class="teal accent-2">
       <v-container width="300px">
         <v-row>
           <v-col
-            v-for="product in $store.state.store.products"
+            v-for="product in $store.state.products.products"
             :key="product.id"
             cols="12"
             md="4"
@@ -57,7 +56,6 @@ export default {
   },
   methods: {
     addToShoppingCart(product) {
-      console.log("submit addToShoppingCart");
       this.$store.dispatch("addProductToShoppingCart", product);
     },
   },
