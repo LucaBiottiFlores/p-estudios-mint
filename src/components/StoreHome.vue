@@ -7,7 +7,7 @@
         <div class="whiteContainer">
           <v-row>
             <v-col
-              v-for="product in $store.state.products"
+              v-for="product in $store.state.products.products"
               :key="product.id"
               sm="12"
               lg="4"
