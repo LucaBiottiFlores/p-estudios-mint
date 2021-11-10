@@ -14,7 +14,7 @@
           >
             <v-card class="text-center">
               <v-container fluid>
-                <v-img class="image_store mx-auto" :src="product.src"></v-img>
+                <img class="image_store mx-auto" :src="product.src" />
               </v-container>
 
               <v-card-title class="justify-center">{{
