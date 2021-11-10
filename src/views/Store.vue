@@ -49,7 +49,6 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   background-position-y: 50px;
 }
 .hero_store_title {
