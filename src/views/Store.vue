@@ -18,27 +18,27 @@
         @input="$store.dispatch('setSearch', $event.target.value)"
       />
     </form>
-
+    <ProductList />
     <!-- <ProductList
-      v-if="$store.getters.searchedProducts.length > 0"
-      :products="$store.getters.searchedProducts"
-    /> -->
+      v-if="$store.getters['products/searchedProducts'] > 0"
+      :products="$store.getters['products/searchedProducts']"
+    />
     <div>
-      <div class="product-not-found my-5">Producto no encontrado! D:</div>
-    </div>
+      <div class="my-5">Producto no encontrado! D:</div>
+    </div> -->
   </v-app>
 </template>
 
 <script>
-// import ProductList from "../components/ProductList.vue";
+import ProductList from "../components/ProductList.vue";
 
 export default {
-  // components: {
-  //   ProductList,
-  // },
-  // mounted() {
-  //   this.$store.dispatch("products/AllProducts");
-  // },
+  components: {
+    ProductList,
+  },
+  mounted() {
+    this.$store.dispatch("products/AllProducts");
+  },
 };
 </script>
 
@@ -49,7 +49,6 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   background-position-y: 50px;
 }
 .hero_store_title {
