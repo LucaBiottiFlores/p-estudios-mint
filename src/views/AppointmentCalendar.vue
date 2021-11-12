@@ -162,7 +162,11 @@
                           color="secondary"
                           class="mr-4"
                           @click.stop="dialog = false"
+
                           >Reservar Sala</v-btn
+
+                          >Reservar</v-btn
+
                         >
                       </div>
                     </v-card-actions>
@@ -233,6 +237,7 @@
 </template>
 
 <script>
+
 import Firebase from 'firebase'
 import VSwatches from 'vue-swatches'
 
@@ -388,7 +393,6 @@ export default {
               duration: this.endTime - this.startTime
             })
           this.getEvents()
-
           this.name = null
           this.details = null
           this.startDate = null
