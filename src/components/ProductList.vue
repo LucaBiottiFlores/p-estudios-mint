@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <v-divider></v-divider>
-
-    <div class="teal accent-2">
+    <div class="container_store">
       <v-container width="300px">
         <v-row>
           <v-col
@@ -12,35 +10,42 @@
             md="4"
             sm="12"
           >
-            <v-card class="text-center">
-              <v-container fluid>
-                <img class="image_store mx-auto" :src="product.src" />
-              </v-container>
+            <v-hover>
+              <template v-slot:default="{ hover }">
+                <v-card
+                  class="text-center rounded-xl"
+                  :elevation="hover ? 24 : 5"
+                >
+                  <v-container fluid>
+                    <img class="image_store mx-auto" :src="product.src" />
+                  </v-container>
 
-              <v-card-title class="justify-center">{{
-                product.name
-              }}</v-card-title>
-              <v-divider></v-divider>
-              <v-card-subtitle>{{ product.description }}</v-card-subtitle>
-              <v-divider></v-divider>
-              <v-card-title class="justify-center"
-                ><v-avatar
-                  ><v-icon color="yellow" large class="ms-3 mb-1"
-                    >mdi-star</v-icon
-                  ></v-avatar
-                >
-                ${{ product.price.toLocaleString() }}
-              </v-card-title>
-              <v-divider></v-divider>
-              <v-card-actions class="d-flex justify-end">
-                <v-btn
-                  dark
-                  class="mb-3 teal accent-4 btn_store"
-                  @click="addToShoppingCart(product)"
-                  >Agregar al carrito</v-btn
-                >
-              </v-card-actions>
-            </v-card>
+                  <v-card-title class="justify-center">{{
+                    product.name
+                  }}</v-card-title>
+                  <v-card-subtitle>{{ product.description }} </v-card-subtitle>
+
+                  <v-card-title class="justify-center price_container"
+                    ><v-avatar
+                      ><v-icon color="yellow" large class="ms-3 mb-1"
+                        >mdi-star</v-icon
+                      ></v-avatar
+                    >
+                    ${{ product.price.toLocaleString() }}
+                  </v-card-title>
+
+                  <v-card-actions class="d-flex justify-center">
+                    <v-btn
+                      rounded
+                      dark
+                      class="mb-3 teal accent-4 btn_store"
+                      @click="addToShoppingCart(product)"
+                      >Agregar al carrito</v-btn
+                    >
+                  </v-card-actions>
+                </v-card>
+              </template>
+            </v-hover>
           </v-col>
         </v-row>
       </v-container>
@@ -73,7 +78,11 @@ export default {
 }
 .image_store {
   width: 200px;
-  height: 230px;
+  height: 200px;
+}
+.price_container {
+  margin: 0;
+  padding: 0;
 }
 
 .store_price {
