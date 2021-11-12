@@ -209,7 +209,7 @@
                     v-model="selectedEvent.startTime"
                     item-text="text"
                     :items="startHours"
-                    label="Hora Inicio"
+                    label="Hora de Inicio"
                     required
                   >
                   </v-select>
@@ -218,7 +218,7 @@
                     v-model="selectedEvent.endTime"
                     item-text="text"
                     :items="startHours"
-                    label="Hora Término"
+                    label="Hora de Término"
                     required
                   >
                   </v-select>
