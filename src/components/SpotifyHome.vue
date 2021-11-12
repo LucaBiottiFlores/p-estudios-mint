@@ -46,7 +46,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('session/subscribeToAuthStateChange')
     this.startSpotify()
   },
   created() {
