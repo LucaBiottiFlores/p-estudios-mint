@@ -49,14 +49,19 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "ProductList",
   props: {
     products: { type: Array, require: true },
   },
+
   methods: {
+    ...mapActions(["add_ToShoppingCart"]),
+
     addToShoppingCart(product) {
-      this.$store.dispatch("addProductToShoppingCart", product);
+      this.$store.dispatch("shopCart/addProductToShoppingCart", product);
     },
   },
 };

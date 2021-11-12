@@ -45,34 +45,32 @@
 
 <script>
 export default {
-  name: 'Navbar',
+  name: "Navbar",
   data: () => ({
     drawer: true,
     links: [
       {
-        name: 'Inicio',
-        to: '/'
+        name: "Inicio",
+        to: "/",
       },
       {
-        name: 'Agenda tu hora',
-        to: '/agendar-hora'
+        name: "Agenda tu hora",
+        to: "/agendar-hora",
       },
       {
-        name: 'Tienda',
-        to: '/tienda'
+        name: "Tienda",
+        to: "/tienda",
       },
       {
-        name: 'Carrito de compras',
-        to: '/carrito-de-compras'
-      }
-    ]
+        name: "Carrito de compras",
+        to: "/carrito-de-compras",
+      },
+    ],
   }),
   methods: {
     log() {
-      console.log('holitas')
-    }
-  }
-}
+      console.log("holitas");
+    },
+  },
+};
 </script>
-
-

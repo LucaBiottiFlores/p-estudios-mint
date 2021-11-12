@@ -164,9 +164,8 @@
                           @click.stop="dialog = false"
 
                           >Reservar Sala</v-btn
-
+                          >Reservar Sala</v-btn
                           >Reservar</v-btn
-
                         >
                       </div>
                     </v-card-actions>
@@ -193,29 +192,65 @@
 
               <v-card-text>
                 <v-form v-if="currentlyEditing !== selectedEvent.id">
-                  {{ selectedEvent.name }} - {{ selectedEvent.details }}
+                  <p>Nombre: {{ selectedEvent.name }}</p>
+                  <p>Detalle: {{ selectedEvent.details }}</p>
+                  <p>
+                    Hora: {{ selectedEvent.startTime }} -
+                    {{ selectedEvent.endTime }}
+                  </p>
                 </v-form>
 
                 <v-form v-else>
+                  <v-text-field
+                    type="date"
+                    v-model="selectedEvent.startDate"
+                    label="Editar Fecha"
+                  >
+                  </v-text-field>
+
+                  <v-select
+                    v-model="selectedEvent.startTime"
+                    item-text="text"
+                    :items="startHours"
+                    label="Hora Inicio"
+                    required
+                  >
+                  </v-select>
+
+                  <v-select
+                    v-model="selectedEvent.endTime"
+                    item-text="text"
+                    :items="startHours"
+                    label="Hora Término"
+                    required
+                  >
+                  </v-select>
+
                   <v-text-field
                     type="text"
                     v-model="selectedEvent.name"
                     label="Editar Nombre"
                   >
                   </v-text-field>
-
-                  <textarea-autosize
+                  <v-text-field
                     v-model="selectedEvent.details"
                     type="text"
-                    style="width: 100%"
                     :min-height="100"
-                  ></textarea-autosize>
+                    label="Editar Detalle"
+                  ></v-text-field>
+                  <v-swatches
+                    v-model="selectedEvent.color"
+                    :swatches="swatches"
+                    row-length="6"
+                    shapes="circles"
+                    popover-x="right"
+                  ></v-swatches>
                 </v-form>
               </v-card-text>
 
               <v-card-actions>
                 <v-btn text color="secondary" @click="selectedOpen = false">
-                  Cancel
+                  Cancelar
                 </v-btn>
                 <v-btn
                   text
@@ -237,7 +272,6 @@
 </template>
 
 <script>
-
 import Firebase from 'firebase'
 import VSwatches from 'vue-swatches'
 
@@ -355,9 +389,19 @@ export default {
           .doc(event.id)
           .update({
             name: event.name,
+            details: event.details,
+            color: event.color,
+            startDate: event.startDate,
+            startTime: `${event.startTime}:00`,
+            endTime: `${event.endTime}:00`,
+            start: `${event.startDate} ${event.startTime}:00`,
+            end: `${event.startDate} ${event.endTime}:00`,
+            duration: event.endTime - event.startTime
+          })
+        this.getEvents()
+
             details: event.details
           })
-
         this.selectedOpen = false
         this.currentlyEditing = null
       } catch (error) {
@@ -390,7 +434,10 @@ export default {
               start: `${this.startDate} ${this.startTime}:00`,
               end: `${this.startDate} ${this.endTime}:00`,
               color: this.color,
-              duration: this.endTime - this.startTime
+              duration: this.endTime - this.startTime,
+              startTime: `${this.startTime}:00`,
+              endTime: `${this.endTime}:00`,
+              startDate: this.startDate
             })
           this.getEvents()
           this.name = null
