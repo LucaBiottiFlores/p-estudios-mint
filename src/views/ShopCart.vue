@@ -1,11 +1,9 @@
 <template>
   <div>
-    <ShoppingCart />
-    <!-- <ShoppingCart
-      v-for="(product, index) in $store.state.shoppingCart.Cart"
-      :key="index"
-      :product="product"
-    /> -->
+    <ShoppingCart v-if="$store.state.shopCart.cart.length > 0" />
+    <div v-else>
+      <p>No hay productos agregados aún al carrito</p>
+    </div>
   </div>
 </template>
 

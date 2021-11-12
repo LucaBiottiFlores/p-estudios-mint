@@ -162,7 +162,10 @@
                           color="secondary"
                           class="mr-4"
                           @click.stop="dialog = false"
+
                           >Reservar Sala</v-btn
+                          >Reservar Sala</v-btn
+                          >Reservar</v-btn
                         >
                       </div>
                     </v-card-actions>
@@ -396,6 +399,9 @@ export default {
             duration: event.endTime - event.startTime
           })
         this.getEvents()
+
+            details: event.details
+          })
         this.selectedOpen = false
         this.currentlyEditing = null
       } catch (error) {
