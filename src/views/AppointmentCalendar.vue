@@ -162,7 +162,7 @@
                           color="secondary"
                           class="mr-4"
                           @click.stop="dialog = false"
-                          >Reservar</v-btn
+                          >Reservar Sala</v-btn
                         >
                       </div>
                     </v-card-actions>
@@ -189,29 +189,65 @@
 
               <v-card-text>
                 <v-form v-if="currentlyEditing !== selectedEvent.id">
-                  {{ selectedEvent.name }} - {{ selectedEvent.details }}
+                  <p>Nombre: {{ selectedEvent.name }}</p>
+                  <p>Detalle: {{ selectedEvent.details }}</p>
+                  <p>
+                    Hora: {{ selectedEvent.startTime }} -
+                    {{ selectedEvent.endTime }}
+                  </p>
                 </v-form>
 
                 <v-form v-else>
+                  <v-text-field
+                    type="date"
+                    v-model="selectedEvent.startDate"
+                    label="Editar Fecha"
+                  >
+                  </v-text-field>
+
+                  <v-select
+                    v-model="selectedEvent.startTime"
+                    item-text="text"
+                    :items="startHours"
+                    label="Inicio"
+                    required
+                  >
+                  </v-select>
+
+                  <v-select
+                    v-model="selectedEvent.endTime"
+                    item-text="text"
+                    :items="startHours"
+                    label="Fin"
+                    required
+                  >
+                  </v-select>
+
                   <v-text-field
                     type="text"
                     v-model="selectedEvent.name"
                     label="Editar Nombre"
                   >
                   </v-text-field>
-
-                  <textarea-autosize
+                  <v-text-field
                     v-model="selectedEvent.details"
                     type="text"
-                    style="width: 100%"
                     :min-height="100"
-                  ></textarea-autosize>
+                    label="Editar Detalle"
+                  ></v-text-field>
+                  <v-swatches
+                    v-model="selectedEvent.color"
+                    :swatches="swatches"
+                    row-length="6"
+                    shapes="circles"
+                    popover-x="right"
+                  ></v-swatches>
                 </v-form>
               </v-card-text>
 
               <v-card-actions>
                 <v-btn text color="secondary" @click="selectedOpen = false">
-                  Cancel
+                  Cancelar
                 </v-btn>
                 <v-btn
                   text
@@ -233,10 +269,8 @@
 </template>
 
 <script>
-
 import Firebase from 'firebase'
 import VSwatches from 'vue-swatches'
-
 
 export default {
   components: { VSwatches },
@@ -244,11 +278,11 @@ export default {
   data: () => ({
     today: new Date().toISOString().substr(0, 10),
     focus: new Date().toISOString().substr(0, 10),
-    type: "month",
+    type: 'month',
     typeToLabel: {
-      month: "Mes",
-      week: "Semana",
-      day: "Día",
+      month: 'Mes',
+      week: 'Semana',
+      day: 'Día'
     },
     startDate: null,
     startTime: null,
@@ -300,80 +334,87 @@ export default {
     details: null,
     color: '#1fbc9c',
     dialog: false,
-    currentlyEditing: null,
+    currentlyEditing: null
   }),
   computed: {
     title() {
-      const { start, end } = this;
+      const { start, end } = this
       if (!start || !end) {
-        return "";
+        return ''
       }
 
-      const startMonth = this.monthFormatter(start);
-      const endMonth = this.monthFormatter(end);
-      const suffixMonth = startMonth === endMonth ? "" : endMonth;
+      const startMonth = this.monthFormatter(start)
+      const endMonth = this.monthFormatter(end)
+      const suffixMonth = startMonth === endMonth ? '' : endMonth
 
-      const startYear = start.year;
-      const endYear = end.year;
-      const suffixYear = startYear === endYear ? "" : endYear;
+      const startYear = start.year
+      const endYear = end.year
+      const suffixYear = startYear === endYear ? '' : endYear
 
-      const startDay = start.day + this.nth(start.day);
-      const endDay = end.day + this.nth(end.day);
+      const startDay = start.day + this.nth(start.day)
+      const endDay = end.day + this.nth(end.day)
 
       switch (this.type) {
-        case "month":
-          return `${startMonth} ${startYear}`;
-        case "week":
-        case "4day":
-          return `${startMonth} ${startDay} ${startYear} - ${suffixMonth} ${endDay} ${suffixYear}`;
-        case "day":
-          return `${startMonth} ${startDay} ${startYear}`;
+        case 'month':
+          return `${startMonth} ${startYear}`
+        case 'week':
+        case '4day':
+          return `${startMonth} ${startDay} ${startYear} - ${suffixMonth} ${endDay} ${suffixYear}`
+        case 'day':
+          return `${startMonth} ${startDay} ${startYear}`
       }
-      return "";
+      return ''
     },
     monthFormatter() {
       return this.$refs.calendar.getFormatter({
-        timeZone: "UTC",
-        month: "long",
-      });
-    },
+        timeZone: 'UTC',
+        month: 'long'
+      })
+    }
   },
   mounted() {
-    this.$refs.calendar.checkChange();
+    this.$refs.calendar.checkChange()
   },
   created() {
-    this.getEvents();
+    this.getEvents()
   },
   methods: {
     async updateEvent(event) {
       try {
         await Firebase.firestore()
-          .collection("appointments")
+          .collection('appointments')
           .doc(event.id)
           .update({
             name: event.name,
             details: event.details,
-          });
-
-        this.selectedOpen = false;
-        this.currentlyEditing = null;
+            color: event.color,
+            startDate: event.startDate,
+            startTime: `${event.startTime}:00`,
+            endTime: `${event.endTime}:00`,
+            start: `${event.startDate} ${event.startTime}:00`,
+            end: `${event.startDate} ${event.endTime}:00`,
+            duration: event.endTime - event.startTime
+          })
+        this.getEvents()
+        this.selectedOpen = false
+        this.currentlyEditing = null
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     editEvent(id) {
-      this.currentlyEditing = id;
+      this.currentlyEditing = id
     },
     async deleteEvent(event) {
       try {
         await Firebase.firestore()
-          .collection("appointments")
+          .collection('appointments')
           .doc(event.id)
-          .delete();
-        this.selectedOpen = false;
-        this.getEvents();
+          .delete()
+        this.selectedOpen = false
+        this.getEvents()
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     async addEvent() {
@@ -387,7 +428,10 @@ export default {
               start: `${this.startDate} ${this.startTime}:00`,
               end: `${this.startDate} ${this.endTime}:00`,
               color: this.color,
-              duration: this.endTime - this.startTime
+              duration: this.endTime - this.startTime,
+              startTime: `${this.startTime}:00`,
+              endTime: `${this.endTime}:00`,
+              startDate: this.startDate
             })
           this.getEvents()
           this.name = null
@@ -399,76 +443,75 @@ export default {
           this.end = null
           this.duration = null
           this.color = '#1fbc9c'
-
         } else {
-          console.log("Campos obligatorios");
+          console.log('Campos obligatorios')
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     async getEvents() {
       try {
         const snapshot = await Firebase.firestore()
-          .collection("appointments")
-          .get();
-        const events = [];
+          .collection('appointments')
+          .get()
+        const events = []
 
         snapshot.forEach((document) => {
-          let eventoData = document.data();
-          eventoData.id = document.id;
-          events.push(eventoData);
-        });
+          let eventoData = document.data()
+          eventoData.id = document.id
+          events.push(eventoData)
+        })
 
-        this.events = events;
+        this.events = events
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     viewDay({ date }) {
-      this.focus = date;
-      this.type = "day";
+      this.focus = date
+      this.type = 'day'
     },
     getEventColor(event) {
-      return event.color;
+      return event.color
     },
     setToday() {
-      this.focus = this.today;
+      this.focus = this.today
     },
     prev() {
-      this.$refs.calendar.prev();
+      this.$refs.calendar.prev()
     },
     next() {
-      this.$refs.calendar.next();
+      this.$refs.calendar.next()
     },
     showEvent({ nativeEvent, event }) {
       const open = () => {
-        this.selectedEvent = event;
-        this.selectedElement = nativeEvent.target;
-        setTimeout(() => (this.selectedOpen = true), 10);
-      };
-
-      if (this.selectedOpen) {
-        this.selectedOpen = false;
-        setTimeout(open, 10);
-      } else {
-        open();
+        this.selectedEvent = event
+        this.selectedElement = nativeEvent.target
+        setTimeout(() => (this.selectedOpen = true), 10)
       }
 
-      nativeEvent.stopPropagation();
+      if (this.selectedOpen) {
+        this.selectedOpen = false
+        setTimeout(open, 10)
+      } else {
+        open()
+      }
+
+      nativeEvent.stopPropagation()
     },
     updateRange({ start, end }) {
       // You could load events from an outside source (like database) now that we have the start and end dates on the calendar
-      this.start = start;
-      this.end = end;
+      this.start = start
+      this.end = end
     },
     nth(d) {
       return d > 3 && d < 21
-        ? "th"
-        : ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"][d % 10];
-    },
-  },
-};
+        ? 'th'
+        : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][d % 10]
+    }
+  }
+}
 </script>
 
 <style scoped>
