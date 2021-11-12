@@ -27,10 +27,10 @@
 
 <script>
 export default {
-mounted() {
+  mounted() {
     this.$store.dispatch("products/AllProducts");
   },
-}
+};
 </script>
 
 <style>
@@ -47,12 +47,12 @@ mounted() {
 }
 .storeHomeTitle {
   text-align: center;
-  font-family: 'Bebas Neue', cursive;
+  font-family: "Bebas Neue", cursive;
   font-size: 70px;
   color: white;
 }
 .storeHomeSubTitle {
-  font-family: 'Bebas Neue', cursive;
+  font-family: "Bebas Neue", cursive;
   font-size: 60px;
   text-align: center;
   margin-bottom: 10px;

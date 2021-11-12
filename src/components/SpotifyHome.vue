@@ -26,80 +26,80 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import Axios from "axios";
 
 const serialize = function (obj) {
-  var str = []
+  var str = [];
   for (var p in obj) {
     // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]))
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
     }
   }
-  return str.join('&')
-}
+  return str.join("&");
+};
 
 export default {
   data: () => {
     return {
-      artistData: null
-    }
+      artistData: null,
+    };
   },
   mounted() {
-    this.startSpotify()
+    this.startSpotify();
   },
   created() {
-    this.startSpotify()
+    this.startSpotify();
   },
   methods: {
     async startSpotify() {
-      const clientId = '46766ccda4a84cb587332f9a62bd989e'
-      const clientSecret = 'c3d204142048482b88579dd0ad1ee65f'
+      const clientId = "46766ccda4a84cb587332f9a62bd989e";
+      const clientSecret = "c3d204142048482b88579dd0ad1ee65f";
 
       const {
-        data: { access_token: spotifyAccessToken }
+        data: { access_token: spotifyAccessToken },
       } = await Axios.post(
-        'https://accounts.spotify.com/api/token',
-        serialize({ grant_type: 'client_credentials' }),
+        "https://accounts.spotify.com/api/token",
+        serialize({ grant_type: "client_credentials" }),
         {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
             Authorization:
-              'Basic ' +
-              new Buffer(`${clientId}:${clientSecret}`).toString('base64')
-          }
+              "Basic " +
+              new Buffer(`${clientId}:${clientSecret}`).toString("base64"),
+          },
         }
-      )
+      );
 
       const { data: artistData } = await Axios.get(
         // "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
         //'https://api.spotify.com/v1/users/jmperezperez',
-        'https://api.spotify.com/v1/users/12138060996/playlists',
+        "https://api.spotify.com/v1/users/12138060996/playlists",
         {
           headers: {
-            Authorization: `Bearer ${spotifyAccessToken}`
-          }
+            Authorization: `Bearer ${spotifyAccessToken}`,
+          },
         }
-      )
+      );
 
-      this.artistData = artistData
+      this.artistData = artistData;
 
-      console.log({ artistData: this.artistData })
-    }
-  }
-}
+      console.log({ artistData: this.artistData });
+    },
+  },
+};
 //funciones generadoras
 function* contador() {
-  yield 1
-  yield 2
-  yield 3
-  yield 4
-  yield 5
+  yield 1;
+  yield 2;
+  yield 3;
+  yield 4;
+  yield 5;
 }
 
-const micontador = contador()
-micontador.next()
-micontador.next()
+const micontador = contador();
+micontador.next();
+micontador.next();
 </script>
 
 <style>
@@ -109,7 +109,7 @@ micontador.next()
 }
 .spotifySectionTitle {
   text-align: center;
-  font-family: 'Bebas Neue', cursive;
+  font-family: "Bebas Neue", cursive;
   font-size: 70px;
   margin-bottom: 1.5em;
 }
