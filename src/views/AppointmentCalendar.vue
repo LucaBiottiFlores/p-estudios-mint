@@ -162,7 +162,11 @@
                           color="secondary"
                           class="mr-4"
                           @click.stop="dialog = false"
+
+                          >Reservar Sala</v-btn
+
                           >Reservar</v-btn
+
                         >
                       </div>
                     </v-card-actions>
@@ -237,18 +241,17 @@
 import Firebase from 'firebase'
 import VSwatches from 'vue-swatches'
 
-
 export default {
   components: { VSwatches },
 
   data: () => ({
     today: new Date().toISOString().substr(0, 10),
     focus: new Date().toISOString().substr(0, 10),
-    type: "month",
+    type: 'month',
     typeToLabel: {
-      month: "Mes",
-      week: "Semana",
-      day: "Día",
+      month: 'Mes',
+      week: 'Semana',
+      day: 'Día'
     },
     startDate: null,
     startTime: null,
@@ -300,80 +303,80 @@ export default {
     details: null,
     color: '#1fbc9c',
     dialog: false,
-    currentlyEditing: null,
+    currentlyEditing: null
   }),
   computed: {
     title() {
-      const { start, end } = this;
+      const { start, end } = this
       if (!start || !end) {
-        return "";
+        return ''
       }
 
-      const startMonth = this.monthFormatter(start);
-      const endMonth = this.monthFormatter(end);
-      const suffixMonth = startMonth === endMonth ? "" : endMonth;
+      const startMonth = this.monthFormatter(start)
+      const endMonth = this.monthFormatter(end)
+      const suffixMonth = startMonth === endMonth ? '' : endMonth
 
-      const startYear = start.year;
-      const endYear = end.year;
-      const suffixYear = startYear === endYear ? "" : endYear;
+      const startYear = start.year
+      const endYear = end.year
+      const suffixYear = startYear === endYear ? '' : endYear
 
-      const startDay = start.day + this.nth(start.day);
-      const endDay = end.day + this.nth(end.day);
+      const startDay = start.day + this.nth(start.day)
+      const endDay = end.day + this.nth(end.day)
 
       switch (this.type) {
-        case "month":
-          return `${startMonth} ${startYear}`;
-        case "week":
-        case "4day":
-          return `${startMonth} ${startDay} ${startYear} - ${suffixMonth} ${endDay} ${suffixYear}`;
-        case "day":
-          return `${startMonth} ${startDay} ${startYear}`;
+        case 'month':
+          return `${startMonth} ${startYear}`
+        case 'week':
+        case '4day':
+          return `${startMonth} ${startDay} ${startYear} - ${suffixMonth} ${endDay} ${suffixYear}`
+        case 'day':
+          return `${startMonth} ${startDay} ${startYear}`
       }
-      return "";
+      return ''
     },
     monthFormatter() {
       return this.$refs.calendar.getFormatter({
-        timeZone: "UTC",
-        month: "long",
-      });
-    },
+        timeZone: 'UTC',
+        month: 'long'
+      })
+    }
   },
   mounted() {
-    this.$refs.calendar.checkChange();
+    this.$refs.calendar.checkChange()
   },
   created() {
-    this.getEvents();
+    this.getEvents()
   },
   methods: {
     async updateEvent(event) {
       try {
         await Firebase.firestore()
-          .collection("appointments")
+          .collection('appointments')
           .doc(event.id)
           .update({
             name: event.name,
-            details: event.details,
-          });
+            details: event.details
+          })
 
-        this.selectedOpen = false;
-        this.currentlyEditing = null;
+        this.selectedOpen = false
+        this.currentlyEditing = null
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     editEvent(id) {
-      this.currentlyEditing = id;
+      this.currentlyEditing = id
     },
     async deleteEvent(event) {
       try {
         await Firebase.firestore()
-          .collection("appointments")
+          .collection('appointments')
           .doc(event.id)
-          .delete();
-        this.selectedOpen = false;
-        this.getEvents();
+          .delete()
+        this.selectedOpen = false
+        this.getEvents()
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     async addEvent() {
@@ -399,76 +402,75 @@ export default {
           this.end = null
           this.duration = null
           this.color = '#1fbc9c'
-
         } else {
-          console.log("Campos obligatorios");
+          console.log('Campos obligatorios')
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     async getEvents() {
       try {
         const snapshot = await Firebase.firestore()
-          .collection("appointments")
-          .get();
-        const events = [];
+          .collection('appointments')
+          .get()
+        const events = []
 
         snapshot.forEach((document) => {
-          let eventoData = document.data();
-          eventoData.id = document.id;
-          events.push(eventoData);
-        });
+          let eventoData = document.data()
+          eventoData.id = document.id
+          events.push(eventoData)
+        })
 
-        this.events = events;
+        this.events = events
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
     viewDay({ date }) {
-      this.focus = date;
-      this.type = "day";
+      this.focus = date
+      this.type = 'day'
     },
     getEventColor(event) {
-      return event.color;
+      return event.color
     },
     setToday() {
-      this.focus = this.today;
+      this.focus = this.today
     },
     prev() {
-      this.$refs.calendar.prev();
+      this.$refs.calendar.prev()
     },
     next() {
-      this.$refs.calendar.next();
+      this.$refs.calendar.next()
     },
     showEvent({ nativeEvent, event }) {
       const open = () => {
-        this.selectedEvent = event;
-        this.selectedElement = nativeEvent.target;
-        setTimeout(() => (this.selectedOpen = true), 10);
-      };
-
-      if (this.selectedOpen) {
-        this.selectedOpen = false;
-        setTimeout(open, 10);
-      } else {
-        open();
+        this.selectedEvent = event
+        this.selectedElement = nativeEvent.target
+        setTimeout(() => (this.selectedOpen = true), 10)
       }
 
-      nativeEvent.stopPropagation();
+      if (this.selectedOpen) {
+        this.selectedOpen = false
+        setTimeout(open, 10)
+      } else {
+        open()
+      }
+
+      nativeEvent.stopPropagation()
     },
     updateRange({ start, end }) {
       // You could load events from an outside source (like database) now that we have the start and end dates on the calendar
-      this.start = start;
-      this.end = end;
+      this.start = start
+      this.end = end
     },
     nth(d) {
       return d > 3 && d < 21
-        ? "th"
-        : ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"][d % 10];
-    },
-  },
-};
+        ? 'th'
+        : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][d % 10]
+    }
+  }
+}
 </script>
 
 <style scoped>
