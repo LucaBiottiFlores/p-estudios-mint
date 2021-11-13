@@ -1,16 +1,17 @@
 <template>
   <div>
-    <h3 class="text-center mt-4 font-weight-black">CARRITO DE COMPRAS</h3>
+    <h3 class="text-center mt-5 m-5">CARRITO DE COMPRAS</h3>
     <template>
       <v-card
         class="ms-5 mt-5"
-        max-width="800"
+        max-width="700"
+        max-height="500"
         outlined
         v-for="(product, i) in $store.state.shopCart.cart"
         :key="product.id"
       >
         <v-list-item three-line>
-          <v-list-item-avatar tile size="80" color="grey">
+          <v-list-item-avatar tile size="200" color="grey">
             <v-img :src="product.src"></v-img>
           </v-list-item-avatar>
           <v-list-item-content class="text-center">
@@ -57,9 +58,7 @@
             @click="removeProductFromShoppingCart(i)"
             >Quitar producto</v-btn
           >
-          <v-btn small class="teal accent-4" dark outlined rounded text
-            >Comprar</v-btn
-          >
+          <PurchaseModal />
         </v-card-actions>
       </v-card>
     </template>
@@ -67,8 +66,13 @@
 </template>
 
 <script>
+import PurchaseModal from "./PurchaseModal.vue";
+
 export default {
   name: "ShoppingCart",
+  components: {
+    PurchaseModal,
+  },
   props: {
     products: { type: Array, require: true },
   },
@@ -80,11 +84,7 @@ export default {
       this.$store.dispatch("shopCart/incrementProductQuantity", product);
     },
     removeProductFromShoppingCart(i) {
-      this.$store.dispatch(
-        "shopCart/removeProductFromShoppingCart",
-
-        i
-      );
+      this.$store.dispatch("shopCart/removeProductFromShoppingCart", i);
     },
   },
 };

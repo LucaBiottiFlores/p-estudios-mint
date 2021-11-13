@@ -22,9 +22,6 @@ export const ModuloProductos = {
         );
       }
     },
-    searchProductByClearance(state) {
-      return state.products.filter((product) => product.clearance === true);
-    },
   },
   mutations: {
     // setear busqueda
@@ -43,7 +40,13 @@ export const ModuloProductos = {
   },
   actions: {
     setSearch(context, newSearch) {
-      context.commit("SET_SEARCH", newSearch);
+      if (typeof newSearch === "string") {
+        context.commit("SET_SEARCH", newSearch);
+      } else {
+        console.warn(
+          `newSearch debiese de ser de tipo string y recibir un tipo ${typeof newSearch}`
+        );
+      }
     },
     // Agregar producto a la lista de productos(ADMIN)
     // addProductToProductList(context, newProduct) {
