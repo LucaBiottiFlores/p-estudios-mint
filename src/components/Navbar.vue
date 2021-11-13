@@ -2,6 +2,7 @@
   <div>
     <v-app-bar app dark>
       <v-img src="../assets/logo.png" max-height="90" max-width="90"></v-img>
+      <RegisterModal />
       <v-spacer></v-spacer>
       <v-col class="mb-3 d-none d-md-flex" cols="12">
         <v-row justify="end" class="mr-14 pr-5 ml-0">
@@ -44,8 +45,13 @@
 </template>
 
 <script>
+import RegisterModal from "../components/RegisterModal.vue"
+
 export default {
   name: "Navbar",
+  components:{
+    RegisterModal
+  },
   data: () => ({
     drawer: true,
     links: [
