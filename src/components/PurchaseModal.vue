@@ -1,6 +1,10 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog
+      v-model="dialog"
+      width="500"
+      transition="dialog-bottom-transition"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           small
@@ -16,7 +20,9 @@
       </template>
 
       <v-card class="rounded-xl">
-        <v-card-title class="modal_card_title mb-5 d-flex justify-center">
+        <v-card-title
+          class="modal_card_title text-white mb-5 d-flex justify-center"
+        >
           Exito
         </v-card-title>
         <v-card-text
