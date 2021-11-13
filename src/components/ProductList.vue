@@ -39,7 +39,7 @@
                       rounded
                       dark
                       class="mb-3 teal accent-4 btn_store"
-                      @click="addToShoppingCart(product)"
+                      @click="addToShoppingCart(product, context)"
                       >Agregar al carrito</v-btn
                     >
                   </v-card-actions>
