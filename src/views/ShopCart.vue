@@ -1,8 +1,8 @@
 <template>
   <div>
     <ShoppingCart v-if="$store.state.shopCart.cart.length > 0" />
-    <div v-else>
-      <p>No hay productos agregados aún al carrito</p>
+    <div v-else class="d-flex justify-center mt-5">
+      <p>No hay productos agregados al carrito aún</p>
     </div>
   </div>
 </template>
@@ -21,7 +21,5 @@ export default {
 </script>
 
 <style>
-.btn_color_mint {
-  color: #95f5bd;
-}
+
 </style>
