@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div class="container_store">
+    <div class="green accent-1" >
       <v-container width="300px">
         <v-row>
           <v-col
@@ -25,10 +25,10 @@
                   }}</v-card-title>
                   <v-card-subtitle>{{ product.description }} </v-card-subtitle>
 
-                  <v-card-title class="justify-center price_container"
+                  <v-card-title class="justify-center me-5 price_container"
                     ><v-avatar
-                      ><v-icon color="yellow" large class="ms-3 mb-1"
-                        >mdi-star</v-icon
+                      ><v-icon color="green accent-2" class="ms-4 mb-1"
+                        >mdi-music</v-icon
                       ></v-avatar
                     >
                     ${{ product.price.toLocaleString() }}
@@ -37,8 +37,7 @@
                   <v-card-actions class="d-flex justify-center">
                     <v-btn
                       rounded
-                      dark
-                      class="mb-3 teal accent-4 btn_store"
+                      class="green accent-2 products_button mb-3"
                       @click="addToShoppingCart(product, context)"
                       >Agregar al carrito</v-btn
                     >
@@ -73,9 +72,7 @@ export default {
 </script>
 
 <style>
-.container_store {
-  background-color: #a4f9c8;
-}
+
 .image_store {
   width: 200px;
   height: 200px;
@@ -83,6 +80,9 @@ export default {
 .price_container {
   margin: 0;
   padding: 0;
+}
+.products_button{
+  background: #A4F9C8;
 }
 
 .store_price {
