@@ -8,7 +8,7 @@
     <v-card>
       <v-form
         ref="form"
-        @submit.prevent="RegistrarUsuario"
+        @submit.prevent="RegisterUser"
         lazy-validation
         class="container"
       >
@@ -55,7 +55,7 @@ export default {
     validate() {
       this.$refs.form.validate();
     },
-    RegistrarUsuario() {
+    RegisterUser() {
       Firebase.auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
