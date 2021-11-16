@@ -24,6 +24,23 @@ const routes = [
     name: "tienda",
     component: () => import("../views/Store.vue"),
   },
+  
+  //////ADMIN
+  {
+    path: "/administrar",
+    name: "Administrar productos",
+    component: () => import("../views/AdminProducts.vue"),
+  }, 
+  {
+    path: "/agregar-producto",
+    name: "Agregar producto",
+    component: () => import("../views/AddProduct.vue"),
+  },
+  {
+    path: "/editar-producto/:id",
+    name: "Editar producto",
+    component: () => import("../views/EditProduct.vue"),
+  },
 ];
 
 const router = new VueRouter({

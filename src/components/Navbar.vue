@@ -45,12 +45,12 @@
 </template>
 
 <script>
-import RegisterModal from "../components/RegisterModal.vue"
+import RegisterModal from "../components/RegisterModal.vue";
 
 export default {
   name: "Navbar",
-  components:{
-    RegisterModal
+  components: {
+    RegisterModal,
   },
   data: () => ({
     drawer: true,
@@ -70,6 +70,19 @@ export default {
       {
         name: "Carrito de compras",
         to: "/carrito-de-compras",
+      },
+      ///////////////////////////////////ADMIN
+      {
+        name: "Administrar productos",
+        to: "/administrar",
+      },
+      {
+        name: "Agregar producto",
+        to: "/administrar/agregar-producto",
+      },
+      {
+        name: "Editar producto",
+        to: "/editar-producto/:id",
       },
     ],
   }),
