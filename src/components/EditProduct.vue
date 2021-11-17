@@ -44,15 +44,16 @@
 import Firebase from "firebase";
 
 export default {
-  BeforeRouteEnter(to, from, next) {
-    Firebase.firestore()
+  beforeRouteEnter(to, from, next) {
+    console.log("PARAMS", to.params.id);
+    return Firebase.firestore()
       .collection("products")
       .doc(to.params.id)
       .get()
       .then((document) => {
+        console.log("DOCUMENT")
         next((vm) => {
-          vm.product = { id: document.id, ...document.products() };
-          console.log(vm.product)
+          vm.product = { id: document.id, ...document.data() };
         });
       });
   },
@@ -62,6 +63,7 @@ export default {
 
   methods: {
     SaveChanges() {
+      console.log(this.product);
       if (this.$refs.form.validate()) {
         Firebase.firestore()
           .collection("products")
@@ -69,9 +71,6 @@ export default {
           .update(this.product)
           .then(() => {
             this.$router.push("/administrar");
-          })
-          .catch(() => {
-            console.log("error -->", this.product)
           });
       }
     },
