@@ -2,40 +2,45 @@
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn class="btn_register" dark v-bind="attrs" v-on="on">
-        Regístrate
+        Login
+        <v-icon>mdi-login</v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-form
         ref="form"
-        @submit.prevent="RegisterUser"
+        @submit.prevent="handleFormSubmit"
         lazy-validation
         class="container"
       >
         <v-text-field
-          v-model="email"
+          v-model="form.email"
           :counter="10"
-          :rules="emailRules"
+          :rules="[required]"
           label="Correo"
           required
+          type="email"
+          name="email"
+          :disabled="loading"
         ></v-text-field>
 
         <v-text-field
-          v-model="password"
-          :rules="passwordRules"
           label="Contraseña"
-          required
+          v-model="form.password"
+          :rules="[required]"
+          type="password"
+          name="password"
+          :disabled="loading"
         ></v-text-field>
 
         <v-btn
           dark
-          :disabled="!valid"
           color="green accent-2"
           class="mr-4"
           type="submit"
-          @click="validate"
+          @click="handleFormSubmit"
         >
-          Registrarse
+          Login
         </v-btn>
 
         <v-btn color="black" text @click="dialog = false"> Cerrar </v-btn>
@@ -45,33 +50,39 @@
 </template>
 
 <script>
-import Firebase from "firebase";
+import delay from 'delay'
 export default {
   data: () => ({
     dialog: false,
-    valid: true,
+    loading: false,
+    color: 'success',
+    form: { email: '', password: '' }
   }),
   methods: {
-    validate() {
-      this.$refs.form.validate();
+    async handleFormSubmit() {
+      if (this.$refs.userForm.validate()) {
+        try {
+          this.loading = true
+          await this.$store.dispatch('sesion/signIn', this.form)
+          this.dialog = false
+          this.loading = false
+        } catch (e) {
+          this.loading = false
+          this.color = 'error'
+          await delay(2000)
+          this.color = 'success'
+        }
+      }
     },
-    RegisterUser() {
-      Firebase.auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((userCredential) => {
-          console.log(userCredential);
-          alert("Registro exitoso");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
-};
+    required(value) {
+      return !!value || 'Este campo es obligatorio'
+    }
+  }
+}
 </script>
 
 <style scoped>
 .btn_register {
-  font-family: "Bebas Neue", cursive;
+  font-family: 'Bebas Neue', cursive;
 }
 </style>

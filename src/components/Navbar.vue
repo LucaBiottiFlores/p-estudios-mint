@@ -2,7 +2,6 @@
   <div>
     <v-app-bar app dark>
       <v-img src="../assets/logo.png" max-height="90" max-width="90"></v-img>
-      <RegisterModal />
       <v-spacer></v-spacer>
       <v-col class="mb-3 d-none d-md-flex" cols="12">
         <v-row justify="end" class="mr-14 pr-5 ml-0">
@@ -45,51 +44,45 @@
 </template>
 
 <script>
-import RegisterModal from "../components/RegisterModal.vue";
+
 
 export default {
-  name: "Navbar",
-  components: {
-    RegisterModal,
-  },
+  name: 'Navbar',
+ 
   data: () => ({
     drawer: true,
     links: [
       {
-        name: "Inicio",
-        to: "/",
+        name: 'Inicio',
+        to: '/'
       },
       {
-        name: "Agenda tu hora",
-        to: "/agendar-hora",
+        name: 'Agenda tu hora',
+        to: '/agendar-hora'
       },
       {
-        name: "Tienda",
-        to: "/tienda",
+        name: 'Tienda',
+        to: '/tienda'
       },
       {
-        name: "Carrito de compras",
-        to: "/carrito-de-compras",
+        name: 'Carrito de compras',
+        to: '/carrito-de-compras'
       },
       ///////////////////////////////////ADMIN
       {
-        name: "Administrar productos",
-        to: "/administrar",
+        name: 'Administrar productos',
+        to: '/administrar'
       },
       {
-        name: "Agregar producto",
-        to: "/administrar/agregar-producto",
-      },
-      {
-        name: "Editar producto",
-        to: "/editar-producto/:id",
-      },
-    ],
+        name: 'Editar producto',
+        to: '/editar-producto/:id'
+      }
+    ]
   }),
   methods: {
     log() {
-      console.log("holitas");
-    },
-  },
-};
+      console.log('holitas')
+    }
+  }
+}
 </script>
