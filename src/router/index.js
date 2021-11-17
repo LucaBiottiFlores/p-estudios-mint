@@ -52,16 +52,15 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const currentUser = Store.state.sesion.user // {user} | null
-  const requiredLogin = to.meta.requiredLogin // undefined | true
-
-  console.log({ currentUser, requiredLogin })
-
+  console.log({ from, to })
+  let user = Store.state.sesion.user
+  let requiredLogin = to.matched.some((res) => res.meta.requiredLogin)
+  console.log({ user, requiredLogin })
   if (requiredLogin) {
-    if (currentUser) {
+    if (user) {
       next()
     } else {
-      next({ name: 'Home' })
+      next('/')
     }
   } else {
     next()

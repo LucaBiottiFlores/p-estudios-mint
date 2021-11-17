@@ -8,29 +8,26 @@
     </template>
     <v-card>
       <v-form
+        v-model="valid"
         ref="form"
-        @submit.prevent="handleFormSubmit"
+        @submit.prevent="validate"
         lazy-validation
         class="container"
       >
         <v-text-field
-          v-model="form.email"
-          :counter="10"
-          :rules="[required]"
-          label="Correo"
+          v-model="email"
+          :rules="emailRules"
+          label="E-mail"
           required
-          type="email"
-          name="email"
-          :disabled="loading"
         ></v-text-field>
 
         <v-text-field
-          label="Contraseña"
-          v-model="form.password"
-          :rules="[required]"
+          v-model="password"
+          :counter="20"
+          :rules="passwordRules"
+          label="Password"
+          required
           type="password"
-          name="password"
-          :disabled="loading"
         ></v-text-field>
 
         <v-btn
@@ -38,7 +35,7 @@
           color="green accent-2"
           class="mr-4"
           type="submit"
-          @click="handleFormSubmit"
+          @click="validate"
         >
           Login
         </v-btn>
@@ -50,32 +47,50 @@
 </template>
 
 <script>
-import delay from 'delay'
+import Firebase from 'firebase'
 export default {
-  data: () => ({
-    dialog: false,
-    loading: false,
-    color: 'success',
-    form: { email: '', password: '' }
-  }),
+  data() {
+    return {
+      dialog: false,
+      loading: false,
+      color: 'success',
+      form: { email: '', password: '' },
+      valid: true,
+      password: '',
+      passwordRules: [
+        (v) => !!v || 'Se requiere contraseña',
+        (v) =>
+          (v && v.length >= 8) ||
+          'Escribe una contraseña igual o mayor a 8 caracteres'
+      ],
+      email: '',
+      emailRules: [
+        (v) => !!v || 'Se requiere correo electrónico',
+        (v) => /.+@.+\..+/.test(v) || 'Escribe un correo electrónico válido'
+      ]
+    }
+  },
   methods: {
-    async handleFormSubmit() {
-      if (this.$refs.userForm.validate()) {
-        try {
-          this.loading = true
-          await this.$store.dispatch('sesion/signIn', this.form)
-          this.dialog = false
-          this.loading = false
-        } catch (e) {
-          this.loading = false
-          this.color = 'error'
-          await delay(2000)
-          this.color = 'success'
-        }
+    validate() {
+      this.$refs.form.validate()
+      if (this.$refs.form.validate()) {
+        Firebase.auth()
+          .signInWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            setTimeout(() => {
+              this.$router
+                .push({ name: 'Administrar productos' })
+                .catch((error) => {
+                  console.info(error.message)
+                })
+            }, 500)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      } else {
+        console.log('error al logear')
       }
-    },
-    required(value) {
-      return !!value || 'Este campo es obligatorio'
     }
   }
 }
