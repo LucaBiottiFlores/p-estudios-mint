@@ -77,10 +77,6 @@ export default {
         to: "/administrar",
       },
       {
-        name: "Agregar producto",
-        to: "/administrar/agregar-producto",
-      },
-      {
         name: "Editar producto",
         to: "/editar-producto/:id",
       },

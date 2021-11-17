@@ -32,11 +32,6 @@ const routes = [
     component: () => import("../views/AdminProducts.vue"),
   }, 
   {
-    path: "/agregar-producto",
-    name: "Agregar producto",
-    component: () => import("../views/AddProduct.vue"),
-  },
-  {
     path: "/editar-producto/:id",
     name: "Editar producto",
     component: () => import("../views/EditProduct.vue"),
