@@ -162,10 +162,7 @@
                           color="secondary"
                           class="mr-4"
                           @click.stop="dialog = false"
-
                           >Reservar Sala</v-btn
-                          >Reservar Sala</v-btn
-                          >Reservar</v-btn
                         >
                       </div>
                     </v-card-actions>
@@ -212,7 +209,7 @@
                     v-model="selectedEvent.startTime"
                     item-text="text"
                     :items="startHours"
-                    label="Hora Inicio"
+                    label="Hora de Inicio"
                     required
                   >
                   </v-select>
@@ -221,7 +218,7 @@
                     v-model="selectedEvent.endTime"
                     item-text="text"
                     :items="startHours"
-                    label="Hora Término"
+                    label="Hora de Término"
                     required
                   >
                   </v-select>
@@ -399,9 +396,6 @@ export default {
             duration: event.endTime - event.startTime
           })
         this.getEvents()
-
-            details: event.details
-          })
         this.selectedOpen = false
         this.currentlyEditing = null
       } catch (error) {

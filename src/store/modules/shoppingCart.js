@@ -46,8 +46,8 @@ export const ModuloCarrito = {
       state.cart.push({ ...product, quantity: 1 });
     },
 
-    INCREMENT_PRODUCT_QUANTITY(state, productAlreadyInShoppinCart) {
-      productAlreadyInShoppinCart.quantity++;
+    INCREMENT_PRODUCT_QUANTITY(state, productInShoppinCart) {
+      productInShoppinCart.quantity++;
     },
 
     REDUCE_PRODUCT_QUANTITY(state, i) {
@@ -63,8 +63,17 @@ export const ModuloCarrito = {
     },
   },
   actions: {
-    addProductToShoppingCart({ commit }, product) {
-      commit("ADD_TO_CART", product);
+    addProductToShoppingCart(context, product) {
+      const productInShoppinCart = context.state.cart.find(
+        (productInShoppinCart) =>
+          (product.name && product.description) ===
+          (productInShoppinCart.name && productInShoppinCart.description)
+      );
+      if (productInShoppinCart) {
+        context.commit("INCREMENT_PRODUCT_QUANTITY", productInShoppinCart);
+      } else {
+        context.commit("ADD_TO_CART", product);
+      }
     },
 
     incrementProductQuantity({ commit }, product) {
