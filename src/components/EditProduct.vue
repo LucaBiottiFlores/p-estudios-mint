@@ -1,11 +1,8 @@
 <template>
   <v-container>
-    <template>
-      <v-btn color="primary" dark> Editar producto </v-btn>
-    </template>
     <v-card>
-      <h1>Editar producto: {{ $route.params.id }}</h1>
       <v-container>
+        <h1>Editar producto: {{ $route.params.id }}</h1>
         <v-form @submit.prevent="SaveChanges" ref="form">
           <v-text-field
             v-model="product.name"
@@ -55,26 +52,60 @@ export default {
       .then((document) => {
         next((vm) => {
           vm.product = { id: document.id, ...document.products() };
+          console.log(vm.product)
         });
       });
   },
   data: () => ({
     product: {},
   }),
+
   methods: {
     SaveChanges() {
       if (this.$refs.form.validate()) {
-        this.loading = true;
         Firebase.firestore()
           .collection("products")
           .doc(this.product.id)
           .update(this.product)
           .then(() => {
-            this.loading = false;
-            this.$router.push("/AdminProducts");
+            this.$router.push("/administrar");
+          })
+          .catch(() => {
+            console.log("error -->", this.product)
           });
       }
     },
+    // validate() {
+    //   this.$refs.form.validate();
+    //   if (this.$refs.form.validate()) {
+    //     let newProduct = {
+    //       price: parseInt(this.price),
+    //       name: this.name,
+    //       category: this.category,
+    //       color: this.color,
+    //       src: this.src,
+    //       description: this.description,
+    //     };
+    //     this.$store.dispatch("updateProduct", newProduct).then(() => {
+    //       setTimeout(() => {
+    //         this.$router.replace({ name: "Administrar productos" });
+    //       }, 1000);
+    //     });
+    //   }
+    // },
+    // mounted() {
+    //   let foundProduct = this.sendingProducts.find(
+    //     (result) => result.productId === this.id
+    //   );
+    //   if (foundProduct !== undefined) {
+    //     this.price = parseInt(foundProduct.price);
+    //     this.name = foundProduct.name;
+    //     this.category = foundProduct.category;
+    //     this.color = foundProduct.color;
+    //     this.src = foundProduct.src;
+    //     this.description = foundProduct.description;
+    //   }
+    // },
   },
 };
 </script>

@@ -28,6 +28,7 @@ const routes = [
 
   //////ADMIN
   {
+
     path: '/administrar',
     name: 'Administrar productos',
     component: () => import('../views/AdminProducts.vue'),
@@ -44,6 +45,7 @@ const routes = [
     }
   }
 ]
+
 
 const router = new VueRouter({
   mode: 'history',

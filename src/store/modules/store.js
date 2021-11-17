@@ -7,6 +7,10 @@ export const ModuloProductos = {
     products: [],
   },
   getters: {
+    sendingProducts(state) {
+      return state.products;
+    },
+
     searchedProducts(state) {
       if (state.search === "") {
         return state.products;
@@ -24,6 +28,10 @@ export const ModuloProductos = {
     },
   },
   mutations: {
+    // MUTATE_PRODUCTS(state, products) {
+    //   state.products = products;
+    // },
+
     // setear busqueda
     SET_SEARCH(state, newSearch) {
       state.search = newSearch;
@@ -48,10 +56,6 @@ export const ModuloProductos = {
         );
       }
     },
-    // Agregar producto a la lista de productos(ADMIN)
-    // addProductToProductList(context, newProduct) {
-    //   context.commit("ADD_PRODUCT_TO_PRODUCT_LIST", { ...newProduct });
-    // },
     clickOnCheckout(context) {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -72,5 +76,30 @@ export const ModuloProductos = {
           context.commit("SET_PRODUCTS", products);
         });
     },
+    // bringProducts({ commit }) {
+    //   Firebase.firestore()
+    //     .collection("products")
+    //     .onSnapshot((result) => {
+    //       let products = [];
+    //       result.forEach((element) => {
+    //         products.push({
+    //           price: element.data().price,
+    //           name: element.data().name,
+    //           category: element.data().category,
+    //           color: element.data().color,
+    //           src: element.data().src,
+    //           description: element.data().description,
+    //         });
+    //       });
+    //       commit("MUTATE_PRODUCTS", products);
+    //     });
+    // },
+
+    // updateProducts(context, product) {
+    //   return Firebase.firestore()
+    //     .collection("products")
+    //     .doc(product.productId)
+    //     .update({ ...product });
+    // },
   },
 };

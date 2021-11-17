@@ -9,7 +9,7 @@
           <v-text-field v-model="product.name" label="Nombre"></v-text-field>
           <v-text-field
             v-model="product.category"
-            type="number"
+            type="text"
             label="Categoria"
           ></v-text-field>
           <v-text-field
@@ -64,9 +64,6 @@ export default {
       src: "",
     },
   }),
-  mounted() {
-    console.log(this.$refs.form);
-  },
   methods: {
     AddProduct() {
       if (this.$refs.form.validate()) {
