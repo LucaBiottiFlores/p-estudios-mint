@@ -14,7 +14,12 @@
         </v-btn>
 
         <div class="d-flex justify-center ml-9">
-          <v-btn v-if="$store.state.sesion.user" icon @click="handleLogout" color="white">
+          <v-btn
+            v-if="$store.state.sesion.user"
+            icon
+            @click="handleLogout"
+            color="white"
+          >
             <span class="ml-3 text-caption d-sm-inline" alt="Salir"
               >LogOut</span
             >
