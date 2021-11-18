@@ -356,12 +356,40 @@ export default {
     },
 
     filteredDataEndTime() {
+      const selectedEndTimeHours = this.events.map((event) => {
+        return {
+          eventEndTimeHour: event.endTimeHour,
+          eventStartDate: event.startDate
+        }
+      })
+      console.log(selectedEndTimeHours)
+
+      const filteredSelectedEndTimeHours = selectedEndTimeHours.filter(
+        (date) => date.eventStartDate === this.startDate
+      )
+      console.log(filteredSelectedEndTimeHours)
+
+      const numberFilteredSelectedEndTimeHours =
+        filteredSelectedEndTimeHours.map((hour) => hour.eventEndTimeHour)
+      console.log(numberFilteredSelectedEndTimeHours)
+
+      const maxFilteredSelectedEndTimeHours = Math.max(
+        ...numberFilteredSelectedEndTimeHours
+      )
+      console.log(maxFilteredSelectedEndTimeHours)
+
       return this.endHours
         .filter((endHour) => endHour.value > this.startTime)
         .filter((endHour) => {
-          if (this.filteredDataStartDateEvents.length > 0) {
+          if (
+            this.filteredDataStartDateEvents.length > 0 &&
+            this.startTime <= maxFilteredSelectedEndTimeHours
+          ) {
             return this.filteredDataStartDateEvents.some((event) => {
-              return endHour.value >= event.startTimeHour
+              return (
+                endHour.value >= event.startTimeHour &&
+                endHour.value < event.endTimeHour
+              )
             })
           } else {
             return true
