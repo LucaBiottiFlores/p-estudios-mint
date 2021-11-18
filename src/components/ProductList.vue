@@ -4,11 +4,12 @@
       <v-container width="300px">
         <v-row>
           <v-col
-            v-for="product in $store.state.products.products"
+            v-for="product in products"
             :key="product.id"
             cols="12"
             md="4"
             sm="12"
+            
           >
             <v-hover>
               <template v-slot:default="{ hover }">

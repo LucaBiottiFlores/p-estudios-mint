@@ -13,9 +13,9 @@
           </v-icon>
         </v-btn>
 
-        <div class="mr-14">
+        <div class="d-flex justify-center ml-9">
           <v-btn icon @click="handleLogout" color="white">
-            <span class="ml-3 text-caption d-none d-sm-inline" alt="Salir"
+            <span class="ml-3 text-caption d-sm-inline" alt="Salir"
               >LogOut</span
             >
             <v-icon

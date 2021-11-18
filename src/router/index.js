@@ -28,6 +28,7 @@ const routes = [
 
   //////ADMIN
   {
+
     path: '/administrar',
     name: 'Administrar productos',
     component: () => import('../views/AdminProducts.vue'),
@@ -45,6 +46,7 @@ const routes = [
   }
 ]
 
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -60,7 +62,7 @@ router.beforeEach((to, from, next) => {
     if (user) {
       next()
     } else {
-      next('/')
+      next()
     }
   } else {
     next()
