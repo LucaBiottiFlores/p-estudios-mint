@@ -1,7 +1,7 @@
 <template>
   <v-dialog width="1000px">
-    <template class="d-flex justify-end" v-slot:activator="{ on, attrs }">
-      <v-btn v-bind="attrs" v-on="on"> Agregar un producto nuevo </v-btn>
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn class="teal accent-1" v-bind="attrs" v-on="on"> Agregar un producto nuevo </v-btn>
     </template>
     <v-card>
       <v-container>
@@ -73,7 +73,7 @@ export default {
           .doc(this.product.id)
           .set(this.product)
           .then(() => {
-            this.$router.push("/administrar");
+            this.$router.push("/carrito-de-compras");
           });
       }
     },

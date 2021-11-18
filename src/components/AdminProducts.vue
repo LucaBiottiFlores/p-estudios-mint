@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <h1 class="text-center">ADMINISTRAR</h1>
+  <v-container>
+    <h3 class="text-center mb-5">Administrar productos</h3>
     <v-data-table :items="$store.state.products.products" :headers="headers">
       <!-- costo -->
       <template v-slot:[`item.price`]="{ item }">
@@ -33,18 +33,11 @@
         </v-chip>
         <!-- imagen -->
       </template>
-      <template v-slot:[`item.src`]="{ item }">
-        <v-chip>
-          {{ item.src }}
-        </v-chip>
-      </template>
-      <template v-slot:[`item.id`]="{ item }">
-        <v-chip>
-          {{ item.id }}
-        </v-chip>
-      </template>
+      <!-- <template v-slot:[`item.src`]="{ item }">
+        {{ item.src }}
+      </template> -->
       <template v-slot:[`item.acciones`]="{ item }">
-        <div>
+        <div class="div">
           <v-btn icon @click="ChangeToEdit(item)">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
@@ -54,7 +47,7 @@
         </div>
       </template>
     </v-data-table>
-  </v-app>
+  </v-container>
 </template>
 <script>
 import Firebase from "firebase";
@@ -62,14 +55,14 @@ import Firebase from "firebase";
 export default {
   name: "ProductsTable",
   data: () => ({
+    link: "VERYLONGTOSH..",
     headers: [
       { text: "Nombre", value: "name" },
       { text: "Precio", value: "price" },
       { text: "descripción", value: "description" },
       { text: "color", value: "color" },
       { text: "categoria", value: "category" },
-      { text: "Imagen", value: "src" },
-      { text: "Id", value: "id" },
+      // { text: "Imagen", value: "src" },
       { text: "Acciones", value: "acciones" },
     ],
   }),
@@ -90,3 +83,4 @@ export default {
   },
 };
 </script>
+<style scoped></style>

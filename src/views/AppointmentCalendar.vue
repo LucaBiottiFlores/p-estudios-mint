@@ -94,6 +94,7 @@
                           type="date"
                           label="Inicio del evento"
                           v-model="startDate"
+                          @change="onDateChange"
                         >
                         </v-text-field>
                       </v-col>
@@ -101,7 +102,8 @@
                         <v-select
                           v-model="startTime"
                           item-text="text"
-                          :items="startHours"
+                          item-value="value"
+                          :items="filteredDataStartTime"
                           label="Inicio"
                           required
                         >
@@ -111,7 +113,8 @@
                         <v-select
                           v-model="endTime"
                           item-text="text"
-                          :items="endHours"
+                          item-value="value"
+                          :items="filteredDataEndTime"
                           label="Término"
                           required
                         ></v-select>
@@ -212,7 +215,7 @@
                   <v-select
                     v-model="selectedEvent.startTime"
                     item-text="text"
-                    :items="startHours"
+                    :items="filteredDataEditStartTime"
                     label="Hora de Inicio"
                     required
                   >
@@ -221,7 +224,7 @@
                   <v-select
                     v-model="selectedEvent.endTime"
                     item-text="text"
-                    :items="startHours"
+                    :items="filteredDataEditEndTime"
                     label="Hora de Término"
                     required
                   >
@@ -246,6 +249,8 @@
                     shapes="circles"
                     popover-x="right"
                   ></v-swatches>
+                  {{ selectedEvent.startTime }}
+                  {{ selectedEvent.startDate }}
                 </v-form>
               </v-card-text>
 
@@ -295,6 +300,8 @@ export default {
     start: null,
     end: null,
     duration: null,
+    startTimeHour: null,
+    endTimeHour: null,
     startHours: [
       { text: '09:00', value: 9 },
       { text: '10:00', value: 10 },
@@ -342,6 +349,97 @@ export default {
     currentlyEditing: null
   }),
   computed: {
+    filteredDataStartDateEvents() {
+      return this.events.filter((date) =>
+        date.startDate.includes(this.startDate)
+      )
+    },
+
+    filteredDataEndTime() {
+      const selectedEndTimeHours = this.events.map((event) => {
+        return {
+          eventEndTimeHour: event.endTimeHour,
+          eventStartDate: event.startDate
+        }
+      })
+      console.log(selectedEndTimeHours)
+
+      const filteredSelectedEndTimeHours = selectedEndTimeHours.filter(
+        (date) => date.eventStartDate === this.startDate
+      )
+      console.log(filteredSelectedEndTimeHours)
+
+      const numberFilteredSelectedEndTimeHours =
+        filteredSelectedEndTimeHours.map((hour) => hour.eventEndTimeHour)
+
+      console.log(numberFilteredSelectedEndTimeHours)
+
+      const maxFilteredSelectedEndTimeHours = Math.max(
+        ...numberFilteredSelectedEndTimeHours
+      )
+      console.log(maxFilteredSelectedEndTimeHours)
+
+      return this.endHours
+        .filter((endHour) => endHour.value > this.startTime)
+        .filter((endHour) => {
+          if (
+            this.filteredDataStartDateEvents.length > 0 &&
+            this.startTime < maxFilteredSelectedEndTimeHours
+          ) {
+            return this.filteredDataStartDateEvents.some((event) => {
+              return (
+                endHour.value >= event.startTimeHour &&
+                endHour.value < event.endTimeHour
+              )
+            })
+          } else {
+            return true
+          }
+        })
+    },
+
+    filteredDataStartTime() {
+      return this.startHours.filter((startHour) => {
+        return !this.filteredDataStartDateEvents.some((event) => {
+          return (
+            startHour.value >= event.startTimeHour &&
+            startHour.value < event.endTimeHour
+          )
+        })
+      })
+    },
+
+    filteredDataStartDateEditEvents() {
+      return this.events.filter((date) =>
+        date.startDate.includes(this.selectedEvent.startDate)
+      )
+    },
+
+    filteredDataEditEndTime() {
+      return this.endHours
+        .filter((endHour) => endHour.value > this.selectedEvent.startTime)
+        .filter((endHour) => {
+          if (this.filteredDataStartDateEditEvents.length > 0) {
+            return this.filteredDataStartDateEditEvents.some((event) => {
+              return endHour.value >= event.startTimeHour
+            })
+          } else {
+            return true
+          }
+        })
+    },
+
+    filteredDataEditStartTime() {
+      return this.startHours.filter((startHour) => {
+        return !this.filteredDataStartDateEditEvents.some((event) => {
+          return (
+            startHour.value >= event.startTimeHour &&
+            startHour.value < event.endTimeHour
+          )
+        })
+      })
+    },
+
     title() {
       const { start, end } = this
       if (!start || !end) {
@@ -384,6 +482,22 @@ export default {
     this.getEvents()
   },
   methods: {
+    onDateChange() {
+      const startDateRef = Firebase.firestore().collection('appointments')
+      const query = startDateRef
+        .where('startDate', '==', this.startDate)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, ' => ', doc.data())
+          })
+        })
+        .catch((error) => {
+          console.log('Error getting documents: ', error)
+        })
+      return query
+    },
     async updateEvent(event) {
       try {
         await Firebase.firestore()
@@ -398,7 +512,9 @@ export default {
             endTime: `${event.endTime}:00`,
             start: `${event.startDate} ${event.startTime}:00`,
             end: `${event.startDate} ${event.endTime}:00`,
-            duration: event.endTime - event.startTime
+            duration: event.endTime - event.startTime,
+            startTimeHour: event.startTime,
+            endTimeHour: event.endTime
           })
         this.getEvents()
         this.selectedOpen = false
@@ -436,9 +552,12 @@ export default {
               duration: this.endTime - this.startTime,
               startTime: `${this.startTime}:00`,
               endTime: `${this.endTime}:00`,
-              startDate: this.startDate
+              startDate: this.startDate,
+              startTimeHour: this.startTime,
+              endTimeHour: this.endTime
             })
           this.getEvents()
+          console.log(this.startDate)
           this.name = null
           this.details = null
           this.startDate = null
@@ -463,12 +582,13 @@ export default {
         const events = []
 
         snapshot.forEach((document) => {
-          let eventoData = document.data()
-          eventoData.id = document.id
-          events.push(eventoData)
+          let eventData = document.data()
+          eventData.id = document.id
+          events.push(eventData)
         })
 
         this.events = events
+        console.log(events)
       } catch (error) {
         console.log(error)
       }
