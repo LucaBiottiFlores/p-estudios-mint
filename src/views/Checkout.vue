@@ -93,4 +93,14 @@ section {
   padding-top: 300px;
   color: black;
 }
+a {
+  color:black
+}
+.btn {
+  border-color: black;
+}
+.btn:hover {
+  background-color: #d9f8af;
+  border-color: #d2f89f;
+}
 </style>

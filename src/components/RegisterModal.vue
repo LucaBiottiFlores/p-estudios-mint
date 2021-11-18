@@ -1,7 +1,13 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn class="btn_register" dark v-bind="attrs" v-on="on">
+      <v-btn
+        v-if="!$store.state.sesion.user"
+        class="btn_register mr-12"
+        dark
+        v-bind="attrs"
+        v-on="on"
+      >
         Login
         <v-icon>mdi-login</v-icon>
       </v-btn>
