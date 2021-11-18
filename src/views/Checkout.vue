@@ -35,7 +35,7 @@ body {
 section {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(-45deg, #ffbd59, #d454c3, #1fa2ff, #5ce1e6);
+  background: linear-gradient(-45deg, #43444D, #A4F9C8, #A4F9C8, #EDE8E8);
   background-size: 400% 400%;
   animation: gradient 8s ease infinite;
   position: relative;
@@ -56,9 +56,9 @@ section {
 .btn-grad {
   background-image: linear-gradient(
     to right,
-    #1fa2ff 0%,
-    #12d8fa 51%,
-    #1fa2ff 100%
+    #A4F9C8 0%,
+    #97CCB1 51%,
+    #43444D 100%
   );
   width: 300px;
 }
@@ -66,31 +66,31 @@ section {
   text-align: center;
   transition: 0.5s;
   background-size: 200% auto;
-  color: white;
-  box-shadow: 0 0 20px #eee;
+  color: black;
+  box-shadow: 0 0 20px #000;
   border-radius: 10px;
   display: block;
 }
 
 .btn-grad:hover {
   background-position: right center;
-  color: #fff;
+  color: #000;
   text-decoration: none;
   background-image: linear-gradient(
     to right,
-    #d454c3 0%,
-    #f391e6 51%,
-    #d454c3 100%
+    #43444D 0%,
+    #000000 51%,
+    #000000 100%
   );
 }
 
 .nav-link:hover {
   text-decoration: none !important;
-  color: #083b9e !important;
+  color: #43444D !important;
 }
 
 .banner-checkout {
   padding-top: 300px;
-  color: #ffffff;
+  color: black;
 }
 </style>

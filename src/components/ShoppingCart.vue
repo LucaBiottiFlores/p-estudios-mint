@@ -81,7 +81,7 @@
           </p>
         </div> -->
         <div class="container text-right">
-          <button class="btn btn-outline-primary mt-3" @click="clickOnCheckout">
+          <button class="btn btn_color_mint btn-outline-primary mt-3" @click="clickOnCheckout">
             Comprar 😃
           </button>
         </div>
@@ -125,7 +125,17 @@ export default {
 
 <style>
 .btn_color_mint {
-  color: #95f5bd;
+  color: black;
+  background-color: #95f5bd ;
+  border-color: #95f5bd;
+  font-family: "Bebas Neue", cursive;
+  font-size: 25px;
+  width: 150px;
+  height: 50px;
+}
+.btn_color_mint:hover {
+  background-color: #43444D;
+  border-color: #43444D;
 }
 .title_color_mint {
   color: #90d4ac;
