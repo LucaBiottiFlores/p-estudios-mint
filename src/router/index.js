@@ -28,7 +28,6 @@ const routes = [
 
   //////ADMIN
   {
-
     path: '/administrar',
     name: 'Administrar productos',
     component: () => import('../views/AdminProducts.vue'),
@@ -43,9 +42,14 @@ const routes = [
     meta: {
       requiredLogin: true
     }
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: () =>
+      import(/* webpackChunkName: "checkout" */ '../views/Checkout.vue')
   }
 ]
-
 
 const router = new VueRouter({
   mode: 'history',

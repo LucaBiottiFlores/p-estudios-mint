@@ -371,6 +371,7 @@ export default {
 
       const numberFilteredSelectedEndTimeHours =
         filteredSelectedEndTimeHours.map((hour) => hour.eventEndTimeHour)
+
       console.log(numberFilteredSelectedEndTimeHours)
 
       const maxFilteredSelectedEndTimeHours = Math.max(
@@ -383,7 +384,7 @@ export default {
         .filter((endHour) => {
           if (
             this.filteredDataStartDateEvents.length > 0 &&
-            this.startTime <= maxFilteredSelectedEndTimeHours
+            this.startTime < maxFilteredSelectedEndTimeHours
           ) {
             return this.filteredDataStartDateEvents.some((event) => {
               return (
