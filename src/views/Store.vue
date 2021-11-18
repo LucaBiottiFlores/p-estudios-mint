@@ -12,8 +12,8 @@
         type="text"
         class="ms-3 mt-3 form_filter"
         placeholder=" Filtra por nombre, categoría, color o descripción"
-        :value="$store.state.search"
-        @input="$store.dispatch('setSearch', $event.target.value)"
+        :value="$store.state.products.search"
+        @input="$store.dispatch('products/setSearch', $event.target.value)"
       />
     </v-container>
     <!-- <ProductList /> -->
@@ -22,7 +22,7 @@
       :products="$store.getters['products/searchedProducts']"
     />
     <div v-else>
-      <div class="my-5">Producto no encontrado! D:</div>
+      <div class="my-5">Producto no encontrado</div>
     </div>
   </v-app>
 </template>

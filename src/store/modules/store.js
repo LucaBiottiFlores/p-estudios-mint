@@ -7,9 +7,9 @@ export const ModuloProductos = {
     products: [],
   },
   getters: {
-    sendingProducts(state) {
-      return state.products;
-    },
+    // sendingProducts(state) {
+    //   return state.products;
+    // },
 
     searchedProducts(state) {
       if (state.search === "") {
