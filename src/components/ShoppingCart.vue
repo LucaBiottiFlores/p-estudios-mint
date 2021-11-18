@@ -164,8 +164,8 @@ export default {
 
 .change-quantity-button {
   border-radius: 25%;
-  background-color: #00aa47;
-  color: #ffffff;
+  background-color: #95f5bd;
+  color: #000000;
   border-color: #95f5bd;
   font-size: 16px;
 }
