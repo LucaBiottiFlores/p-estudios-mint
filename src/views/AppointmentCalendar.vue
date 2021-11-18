@@ -361,7 +361,7 @@ export default {
         .filter((endHour) => {
           if (this.filteredDataStartDateEvents.length > 0) {
             return this.filteredDataStartDateEvents.some((event) => {
-              return endHour.value <= event.startTimeHour
+              return endHour.value >= event.startTimeHour
             })
           } else {
             return true
@@ -392,7 +392,7 @@ export default {
         .filter((endHour) => {
           if (this.filteredDataStartDateEditEvents.length > 0) {
             return this.filteredDataStartDateEditEvents.some((event) => {
-              return endHour.value <= event.startTimeHour
+              return endHour.value >= event.startTimeHour
             })
           } else {
             return true
