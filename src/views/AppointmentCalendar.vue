@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="my-10">
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="80">
