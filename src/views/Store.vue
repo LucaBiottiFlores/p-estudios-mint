@@ -6,12 +6,12 @@
         <h1 class="title_color_mint">DE PRODUCTOS</h1>
       </div>
     </main>
-    <v-container class="form_container" width="100vw">
-      <label class="mt-5 ms-5 form_title">Busca tu producto:</label>
+    <v-container class="form_container text-center" width="100%">
+      <label class="mt-5 form_title"></label>
       <input
         type="text"
-        class="ms-3 mt-3 form_filter"
-        placeholder=" Filtra por nombre, categoría, color o descripción"
+        class="mt-3 form_filter"
+        placeholder="  Busca tu Producto: Filtra por nombre, categoría, color o descripción"
         :value="$store.state.products.search"
         @input="$store.dispatch('products/setSearch', $event.target.value)"
       />
@@ -22,29 +22,36 @@
       :products="$store.getters['products/searchedProducts']"
     />
     <div v-else>
-      <div class="my-5">Producto no encontrado</div>
+      <div class="product-not-found my-5 text-center">Ups! Nada por aquí</div>
+      <div class="text-center">
+        <img
+          src="../assets/pulp-fiction-john-travolta.gif"
+          alt=""
+          class="img-fluid"
+        />
+      </div>
     </div>
   </v-app>
 </template>
 
 <script>
-import ProductList from "../components/ProductList.vue";
+import ProductList from '../components/ProductList.vue'
 
 export default {
-  name: "products",
+  name: 'products',
   components: {
-    ProductList,
+    ProductList
   },
   mounted() {
-    this.$store.dispatch("products/AllProducts");
-  },
-};
+    this.$store.dispatch('products/AllProducts')
+  }
+}
 </script>
 
 <style scoped>
 .hero_store {
-  height: 650px;
-  background-image: url("../assets/carrito.jpg");
+  height: 500px;
+  background-image: url('../assets/carrito.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -52,7 +59,7 @@ export default {
 }
 .hero_store_title {
   position: relative;
-  padding-top: 370px;
+  padding-top: 200px;
 }
 .title_color_white {
   font-size: 80px;
@@ -62,15 +69,18 @@ export default {
   font-size: 80px;
 }
 .form_container {
-  margin: 10px;
-  width: 800px;
   display: flex;
   flex-wrap: nowrap;
 }
 
 .form_filter {
-  width: 400px;
+  width: 100%;
   height: 40px;
   border: solid 1px #95f5bd;
+}
+
+.product-not-found {
+  font-size: 24px;
+  font-weight: bold;
 }
 </style>

@@ -66,7 +66,7 @@ export default {
           to: '/tienda'
         },
         {
-          name: 'Carrito de compras',
+          name: `Carro de Compras (${this.$store.getters['shopCart/totalQuantityInShoppingCart']})`,
           to: '/carrito-de-compras'
         }
       ]
@@ -75,11 +75,11 @@ export default {
           {
             name: 'Administrar productos',
             to: '/administrar'
-          },
-          {
-            name: 'Editar producto',
-            to: '/editar-producto/:id'
           }
+          // {
+          //   name: 'Editar producto',
+          //   to: '/editar-producto/:id'
+          // }
         )
       }
       return links

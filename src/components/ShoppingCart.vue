@@ -1,96 +1,126 @@
 <template>
-  <div>
-    <h1 class="text-center mt-5 m-5 font-weight-light">CARRITO DE COMPRAS</h1>
-    <div width="100vw" class="green accent-1 mb-5">
-      <v-row>
-        <v-col md="4" sm="12">
-          <v-card
-            class="ms-5 mt-5 mb-5"
-            outlined
-            v-for="(product, i) in $store.state.shopCart.cart"
-            :key="product.id"
-          >
-            <v-img
-              width="150px"
-              class="mx-auto mt-5"
-              :src="product.src"
-            ></v-img>
-
-            <v-card-title class="text-h7 mb-4 justify-center">
-              {{ product.description }}
-            </v-card-title>
-            <v-card-title class="text-h6 mt-5 justify-center"
-              >Total: ${{
-                parseInt($store.getters["shopCart/totalAmount"]).toLocaleString(
-                  "de-DE"
-                )
-              }}</v-card-title
+  <div class="container shopping-cart">
+    <table class="table table-bordered">
+      <tbody>
+        <tr
+          v-for="(product, i) in $store.state.shopCart.cart"
+          :key="product.id"
+        >
+          <td class="td-item-img align-middle text-center">
+            <img :src="product.src" alt="" class="img-fluid" />
+          </td>
+          <td class="td-item-name align-middle">
+            <h3>
+              {{ product.name }}
+            </h3>
+            <p>{{ product.description }}</p>
+          </td>
+          <td class="td-item-quantity align-middle text-center">
+            <button
+              class="btn change-quantity-button mr-2"
+              @click="reduceProductQuantity(i)"
             >
+              -</button
+            >{{ product.quantity
+            }}<button
+              class="btn change-quantity-button ml-2"
+              @click="incrementProductQuantity(product)"
+            >
+              +
+            </button>
+            <hr />
+            <button
+              class="btn-delete"
+              @click="removeProductFromShoppingCart(i)"
+            >
+              Eliminar
+            </button>
+          </td>
+          <td class="td-item-price align-middle text-center">
+            <h5>Total Producto</h5>
+            <h4 class="total-shopping-cart">
+              ${{
+                parseInt(product.price * product.quantity).toLocaleString(
+                  'de-DE'
+                )
+              }}
+            </h4>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-            <v-card-actions class="justify-start">
-              <p class="mt-3 text-h7">
-                Cantidad del producto: {{ product.quantity }}
-              </p>
-              <v-btn
-                x-small
-                outlined
-                rounded
-                text
-                class="ms-5"
-                @click="reduceProductQuantity(i)"
-              >
-                <v-icon>mdi-minus</v-icon>
-              </v-btn>
-              <v-btn
-                x-small
-                rounded
-                class="teal accent-3"
-                @click="incrementProductQuantity(product)"
-              >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </v-card-actions>
-            <v-card-actions class="justify-end">
-              <v-btn
-                small
-                outlined
-                rounded
-                text
-                @click="removeProductFromShoppingCart(i)"
-                >Quitar producto</v-btn
-              >
-              <PurchaseModal />
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
+    <div>
+      <div class="mt-5 text-right" v-if="$store.state.shopCart.cart.length > 0">
+        <h4 class="total">
+          El total a pagar es: ${{
+            parseInt($store.getters['shopCart/totalAmount']).toLocaleString(
+              'de-DE'
+            )
+          }}
+        </h4>
+        <!-- <div v-if="$store.getters['totalDiscountShoppingCart'] > 0">
+          <p class="product-quantity">
+            Tienes
+            {{ $store.getters.totalQuantityInShoppingCart }} productos en tu
+            carro de compras
+            <br />
+            Estarías ahorrando ${{
+              parseInt(
+                $store.getters['totalDiscountShoppingCart']
+              ).toLocaleString('de-DE')
+            }}
+            en esta compra 😉
+          </p>
+        </div>
+        <div v-else>
+          <p class="product-quantity">
+            Tienes
+            {{ $store.getters.totalQuantityInShoppingCart }} productos en tu
+            carro de compras
+          </p>
+        </div> -->
+        <div class="container text-right">
+          <button class="btn btn-outline-primary mt-3" @click="clickOnCheckout">
+            Comprar 😃
+          </button>
+        </div>
+      </div>
+
+      <h4 class="mt-5" v-else>
+        No tienes productos en tu carrito de compras actualmente
+      </h4>
     </div>
   </div>
 </template>
 
 <script>
-import PurchaseModal from "./PurchaseModal.vue";
+//import PurchaseModal from './PurchaseModal.vue'
 
 export default {
-  name: "ShoppingCart",
-  components: {
-    PurchaseModal,
-  },
+  name: 'ShoppingCart',
+  // components: {
+  //   PurchaseModal
+  // },
   props: {
-    products: { type: Array, require: true },
+    products: { type: Array, require: true }
   },
   methods: {
     reduceProductQuantity(i) {
-      this.$store.dispatch("shopCart/reduceProductQuantity", i);
+      this.$store.dispatch('shopCart/reduceProductQuantity', i)
     },
     incrementProductQuantity(product) {
-      this.$store.dispatch("shopCart/incrementProductQuantity", product);
+      this.$store.dispatch('shopCart/incrementProductQuantity', product)
     },
     removeProductFromShoppingCart(i) {
-      this.$store.dispatch("shopCart/removeProductFromShoppingCart", i);
+      this.$store.dispatch('shopCart/removeProductFromShoppingCart', i)
     },
-  },
-};
+    async clickOnCheckout() {
+      await this.$store.dispatch('shopCart/clickOnCheckout')
+      this.$router.push('/checkout')
+    }
+  }
+}
 </script>
 
 <style>
@@ -99,5 +129,68 @@ export default {
 }
 .title_color_mint {
   color: #90d4ac;
+}
+
+.td-item-img {
+  width: 20%;
+}
+
+.td-item-name {
+  width: 30%;
+}
+
+.td-item-quantity {
+  width: 25%;
+  font-size: 20px;
+}
+
+.td-item-price {
+  width: 25%;
+}
+
+.btn:hover {
+  color: #95f5bd;
+}
+
+.change-quantity-button {
+  border-radius: 25%;
+  background-color: #00aa47;
+  color: #ffffff;
+  border-color: #95f5bd;
+  font-size: 16px;
+}
+
+.btn-delete {
+  background-color: transparent;
+  border-color: transparent;
+  font-size: 14px;
+  color: #5a5a5a;
+  text-decoration: underline;
+}
+
+.btn-delete:hover {
+  color: #d454c3;
+}
+
+.image-discount {
+  height: 30px;
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.total-shopping-cart {
+  font-weight: bold;
+}
+
+.total {
+  font-weight: bold;
+}
+
+.product-quantity {
+  font-size: 14px;
+  font-weight: normal;
 }
 </style>

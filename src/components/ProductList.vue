@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div class="green accent-1" >
+    <div class="mt-5 accent-1">
       <v-container width="300px">
         <v-row>
           <v-col
@@ -9,7 +9,6 @@
             cols="12"
             md="4"
             sm="12"
-            
           >
             <v-hover>
               <template v-slot:default="{ hover }">
@@ -32,7 +31,7 @@
                         >mdi-music</v-icon
                       ></v-avatar
                     >
-                    ${{ product.price.toLocaleString() }}
+                    ${{ product.price.toLocaleString('de-DE') }}
                   </v-card-title>
 
                   <v-card-actions class="d-flex justify-center">
@@ -54,26 +53,25 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex'
 
 export default {
-  name: "ProductList",
+  name: 'ProductList',
   props: {
-    products: { type: Array, require: true },
+    products: { type: Array, require: true }
   },
 
   methods: {
-    ...mapActions(["add_ToShoppingCart"]),
+    ...mapActions(['add_ToShoppingCart']),
 
     addToShoppingCart(product) {
-      this.$store.dispatch("shopCart/addProductToShoppingCart", product);
-    },
-  },
-};
+      this.$store.dispatch('shopCart/addProductToShoppingCart', product)
+    }
+  }
+}
 </script>
 
 <style>
-
 .image_store {
   width: 200px;
   height: 200px;
@@ -82,8 +80,8 @@ export default {
   margin: 0;
   padding: 0;
 }
-.products_button{
-  background: #A4F9C8;
+.products_button {
+  background: #a4f9c8;
 }
 
 .store_price {
