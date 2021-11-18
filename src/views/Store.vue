@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .hero_store {
   height: 650px;
   background-image: url("../assets/carrito.jpg");
@@ -67,8 +67,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
 }
-.form_title {
-}
+
 .form_filter {
   width: 400px;
   height: 40px;
