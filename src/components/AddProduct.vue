@@ -73,7 +73,7 @@ export default {
           .doc(this.product.id)
           .set(this.product)
           .then(() => {
-            this.$router.push("/carrito-de-compras");
+            this.$router.push("/tienda");
           });
       }
     },
