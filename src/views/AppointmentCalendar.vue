@@ -131,12 +131,12 @@
                       <v-card-text>
                         <div v-if="this.name && this.startTime && this.endTime">
                           <span class="appointment-total mt-5">
-                            Horas:
+                            Cantidad de Horas a Reservar:
 
                             {{ endTime - startTime }}
 
                             <br />
-                            Total:
+                            Total a Pagar:
                             <v-chip color="teal accent-2">
                               ${{
                                 parseInt(
@@ -156,19 +156,40 @@
                         <v-btn
                           color="blue darken-1"
                           text
+                          v-if="!isHidden"
                           @click="dialog = false"
                         >
                           Cancelar
                         </v-btn>
                         <v-btn
-                          type="submit"
+                          :disabled="!isComplete"
                           color="secondary"
                           class="mr-4"
-                          @click.stop="dialog = false"
+                          v-if="!isHidden"
+                          v-on:click="isHidden = true"
                           >Reservar Sala</v-btn
                         >
                       </div>
                     </v-card-actions>
+                    <div v-if="isHidden">
+                      <div class="text-center">
+                        <div>
+                          <img
+                            class="mb-12"
+                            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SalaReservadaExitosamente"
+                          />
+                        </div>
+                        <p>Presenta este código QR en nuestro Estudio 😉</p>
+                        <v-btn
+                          :disabled="!isComplete"
+                          color="secondary"
+                          type="submit"
+                          class="mr-4"
+                          @click.stop="dialog = false"
+                          >¡Listo! 🎉</v-btn
+                        >
+                      </div>
+                    </div>
                   </v-form>
                 </v-container>
               </v-card-text>
@@ -249,8 +270,8 @@
                     shapes="circles"
                     popover-x="right"
                   ></v-swatches>
-                  {{ selectedEvent.startTime }}
-                  {{ selectedEvent.startDate }}
+                  <!-- {{ selectedEvent.startTime }}
+                  {{ selectedEvent.startDate }} -->
                 </v-form>
               </v-card-text>
 
@@ -346,9 +367,20 @@ export default {
     details: null,
     color: '#1fbc9c',
     dialog: false,
+    isHidden: false,
     currentlyEditing: null
   }),
   computed: {
+    isComplete() {
+      return (
+        this.name != null &&
+        this.details != null &&
+        this.startDate != null &&
+        this.startTime != null &&
+        this.endTime != null
+      )
+    },
+
     filteredDataStartDateEvents() {
       return this.events.filter((date) =>
         date.startDate.includes(this.startDate)
@@ -567,6 +599,7 @@ export default {
           this.end = null
           this.duration = null
           this.color = '#1fbc9c'
+          this.isHidden = false
         } else {
           console.log('Campos obligatorios')
         }
