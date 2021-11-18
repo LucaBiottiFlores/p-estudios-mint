@@ -180,7 +180,11 @@
           >
             <v-card color="grey lighten-4" min-width="350px" flat>
               <v-toolbar :color="selectedEvent.color" dark>
-                <v-btn icon @click="deleteEvent(selectedEvent)">
+                <v-btn
+                  icon
+                  @click="deleteEvent(selectedEvent)"
+                  v-if="$store.state.sesion.user"
+                >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
@@ -253,6 +257,7 @@
                   text
                   v-if="currentlyEditing !== selectedEvent.id"
                   @click.prevent="editEvent(selectedEvent.id)"
+                  v-show="$store.state.sesion.user"
                   >Editar</v-btn
                 >
 

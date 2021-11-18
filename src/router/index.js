@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
     if (user) {
       next()
     } else {
-      next('/')
+      next()
     }
   } else {
     next()
